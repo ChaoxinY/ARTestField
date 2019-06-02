@@ -8,7 +8,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/GoogleARCore/Examples/HelloAR/Scenes/HelloAR.unity
     guid: e6a6fa04348cb45c9b0221eb19c946da
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/IntroARCoreTutorial.unity
     guid: bb2bd6b77cffce846920ca2df618d7d3
+  - enabled: 1
+    path: Assets/Scenes/SlingShot.unity
+    guid: 0d1c440be4f97f644acafcc920245b86
   m_configObjects: {}
