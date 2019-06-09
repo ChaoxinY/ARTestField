@@ -1,46 +1,54 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityAD;
 using GoogleARCore;
 
 public class TowerSpawner : MonoBehaviour
 {
     #region Variables
-    private DetectedPlane detectedPlane;
+    private TrackableHit trackableHit;
     public GameObject towerPrefabToSpawn;
+    public Text debugText;
+    private bool towerSpawned;
     #endregion
 
     #region Initialization
     private void Start()
     {
         SubscribeEvent();
-        Debug.Log("Debug_MonitorTest_Called");
     }
     #endregion
 
     #region Functionality
     private void OnPlaneSelected(object eventPublisher ,PlaneSelectedEventArgs planeSelectedEventArgs)
     {
-        detectedPlane = planeSelectedEventArgs.DetectedPlane;
-        SpawnTower();
+        trackableHit = planeSelectedEventArgs.TrackableHit;
+        if (!towerSpawned)
+        {
+            SpawnTower();
+            towerSpawned = true;
+        }    
     }
 
     private void SpawnTower()
     {
-        Instantiate(towerPrefabToSpawn, detectedPlane.CenterPose.position, Quaternion.identity);
+        GameObject tower = Instantiate(towerPrefabToSpawn, trackableHit.Pose.position, Quaternion.identity);
+        var anchor = trackableHit.Trackable.CreateAnchor(trackableHit.Pose);
+        debugText.text = $"Tower SpawnPosition: {tower.transform.position}";
+        // Make Andy model a child of the anchor.
+        //Prevent static gameobject to slip away.
+        tower.transform.parent = anchor.transform;
     }
 
     private void SubscribeEvent()
     {
-        Debug.Log($"CS 35:Count : {StaticRefrences.EventSubject.EventPublishers.Count}");
         foreach (IEventPublisher eventPublisher in StaticRefrences.EventSubject.EventPublishers)
         {
-            Debug.Log($"CS 37:Count : {StaticRefrences.EventSubject.EventPublishers.Count}");
             if (eventPublisher.GetType() == typeof(SlingShot.SceneController))
             {
                 SlingShot.SceneController sceneController = (SlingShot.SceneController)eventPublisher;
                 sceneController.PlaneSelected += OnPlaneSelected;
-                Debug.Log("Debug_Subscribed_Called");   
             }
         }
     }
