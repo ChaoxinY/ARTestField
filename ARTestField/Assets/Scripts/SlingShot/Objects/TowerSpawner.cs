@@ -11,6 +11,7 @@ public class TowerSpawner : MonoBehaviour
     public GameObject towerPrefabToSpawn;
     public Text debugText;
     private bool towerSpawned;
+    private GameObject tower;
     #endregion
 
     #region Initialization
@@ -21,6 +22,24 @@ public class TowerSpawner : MonoBehaviour
     #endregion
 
     #region Functionality
+    public void ClearTower()
+    {
+        Destroy(tower);
+        towerSpawned = false;
+    }
+
+    private void SubscribeEvent()
+    {
+        foreach (IEventPublisher eventPublisher in StaticRefrences.EventSubject.EventPublishers)
+        {
+            if (eventPublisher.GetType() == typeof(SlingShot.InputHandler))
+            {
+                SlingShot.InputHandler inputHandler = (SlingShot.InputHandler)eventPublisher;
+                inputHandler.PlaneSelected += OnPlaneSelected;
+            }
+        }
+    }
+
     private void OnPlaneSelected(object eventPublisher ,PlaneSelectedEventArgs planeSelectedEventArgs)
     {
         trackableHit = planeSelectedEventArgs.TrackableHit;
@@ -33,24 +52,12 @@ public class TowerSpawner : MonoBehaviour
 
     private void SpawnTower()
     {
-        GameObject tower = Instantiate(towerPrefabToSpawn, trackableHit.Pose.position, Quaternion.identity);
+        tower = Instantiate(towerPrefabToSpawn, trackableHit.Pose.position, Quaternion.identity);
         var anchor = trackableHit.Trackable.CreateAnchor(trackableHit.Pose);
         debugText.text = $"Tower SpawnPosition: {tower.transform.position}";
         // Make Andy model a child of the anchor.
         //Prevent static gameobject to slip away.
         tower.transform.parent = anchor.transform;
-    }
-
-    private void SubscribeEvent()
-    {
-        foreach (IEventPublisher eventPublisher in StaticRefrences.EventSubject.EventPublishers)
-        {
-            if (eventPublisher.GetType() == typeof(SlingShot.SceneController))
-            {
-                SlingShot.SceneController sceneController = (SlingShot.SceneController)eventPublisher;
-                sceneController.PlaneSelected += OnPlaneSelected;
-            }
-        }
     }
     #endregion
 }

@@ -4,15 +4,16 @@ using UnityAD;
 
 namespace SlingShot
 {
-    public class SceneController : MonoBehaviour, IEventPublisher
+    public class InputHandler : MonoBehaviour, IEventPublisher
     {
         //Event publisher
         public event System.EventHandler<PlaneSelectedEventArgs> PlaneSelected;
-    
+        public event System.EventHandler<UserTouchEventArgs> TouchDetected;
+
         void Awake()
         {
-           Debug.Log( this is IEventPublisher eventPublisher);
-                QuitOnConnectionErrors();
+            Debug.Log(this is IEventPublisher eventPublisher);
+            QuitOnConnectionErrors();
             StaticRefrences.EventSubject.Subscribe(this as IEventPublisher);
         }
 
@@ -53,12 +54,14 @@ namespace SlingShot
         void ProcessTouches()
         {
             Touch touch;
-            if (Input.touchCount != 1 ||
-                (touch = Input.GetTouch(0)).phase != TouchPhase.Began)  
+            if (Input.touchCount != 1 || (touch = Input.GetTouch(0)).phase != TouchPhase.Began)
             {
                 return;
             }
-
+            touch = Input.GetTouch(0);
+           
+            TouchDetected(this, new UserTouchEventArgs(touch));
+            Debug.Log(" 1" + touch.position);
             TrackableHit hit;
             TrackableHitFlags raycastFilter =
                 TrackableHitFlags.PlaneWithinBounds |
@@ -68,6 +71,7 @@ namespace SlingShot
             {
                 PlaneSelected(this, new PlaneSelectedEventArgs(hit, hit.Trackable as DetectedPlane));
             }
+            Debug.Log(touch.position);
         }
 
         public void UnSubscribeFromSubject()
