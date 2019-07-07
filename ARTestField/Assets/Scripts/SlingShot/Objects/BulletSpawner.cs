@@ -40,9 +40,9 @@ public class BulletSpawner : MonoBehaviour
 
     private void OnTouchDetected(object sender, UserTouchEventArgs userTouchEventArgs)
     {
-        Debug.Log($"ObjectName{ToString()} called");
         touch = userTouchEventArgs.Touch;
-        if (touch.position.y > StaticRefrences.MinimumVerticalPoint && touch.phase == TouchPhase.Ended)
+
+        if (touch.position.y <StaticRefrences.MinimumVerticalPoint && touch.phase == TouchPhase.Ended)
         {
             FireSlingShot(CalculateSlingShotForce());
         }
@@ -67,6 +67,7 @@ public class BulletSpawner : MonoBehaviour
     //Add vector parameter
     public void FireSlingShot(Vector3 force)
     {
+		Debug.Log($"Force{force}");
         GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
         bullet.GetComponentInChildren<Rigidbody>().AddForce(force, ForceMode.Impulse);
     }

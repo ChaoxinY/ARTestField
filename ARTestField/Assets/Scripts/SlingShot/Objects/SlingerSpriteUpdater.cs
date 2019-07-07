@@ -13,6 +13,7 @@ public class SlingerSpriteUpdater : MonoBehaviour
     #region Initialization
     private void Start()
     {
+		//Debugger.DebugObject(this, $"Transform Position: {slingerSpriteTransform.anchoredPosition} Screen measurement:{Screen.width} ,{Screen.height} SlingerOriginPoint: {StaticRefrences.SlingerOriginPoint}");
         SubscribeEvent();
     }
     #endregion
@@ -21,8 +22,7 @@ public class SlingerSpriteUpdater : MonoBehaviour
     private void SubscribeEvent()
     {
         foreach (IEventPublisher eventPublisher in StaticRefrences.EventSubject.EventPublishers)
-        {
-         
+        {         
             if (eventPublisher.GetType() == typeof(SlingShot.InputHandler))
             {
                 SlingShot.InputHandler inputHandler = (SlingShot.InputHandler)eventPublisher;
@@ -32,23 +32,26 @@ public class SlingerSpriteUpdater : MonoBehaviour
     }
 
     private void OnTouchDetected(object eventPublisher, UserTouchEventArgs userTouchEventArgs)
-    {
-        Debug.Log($"ObjectName{ToString()} called");
+    {      
         touch = userTouchEventArgs.Touch;
-        if (touch.position.y > StaticRefrences.MinimumVerticalPoint)
-        {
-            UpdateSlingerSpritePosition();
+		//Debugger.DebugObject(this, $"Touch position{touch.position}, called MinimumPoint{StaticRefrences.MinimumVerticalPoint}");
+		if(touch.position.y < StaticRefrences.MinimumVerticalPoint)
+		{
+				UpdateSlingerSpritePosition();
         }
     }
 
     private void UpdateSlingerSpritePosition()
     {
-        if (touch.phase == TouchPhase.Ended)
-        {
-            slingerSpriteTransform.position = StaticRefrences.SlingerOriginPoint;
-        }
-        slingerSpriteTransform.position = touch.position;
-    }
+		if(touch.phase == TouchPhase.Ended)
+		{
+			slingerSpriteTransform.position = StaticRefrences.SlingerOriginPoint;
+		}
+		else
+		{
+			slingerSpriteTransform.position = touch.position;
+		}
+	}
     #endregion
 }
 

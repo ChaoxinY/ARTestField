@@ -27,24 +27,7 @@ namespace SlingShot
                 return;
             }
             Screen.sleepTimeout = SleepTimeout.NeverSleep;
-            ProcessTouches();
-        }
-
-        void QuitOnConnectionErrors()
-        {
-            //Is the permission to use the camera granted?
-            if (Session.Status == SessionStatus.ErrorPermissionNotGranted)
-            {
-                StartCoroutine(CodelabUtils.ToastAndExit(
-                    "Camera permission is needed to run this application.", 5));
-            }
-            else if (Session.Status.IsError())
-            {
-                // This covers a variety of errors.  See reference for details
-                // https://developers.google.com/ar/reference/unity/namespace/GoogleARCore
-                StartCoroutine(CodelabUtils.ToastAndExit(
-                    "ARCore encountered a problem connecting. Please restart the app.", 5));
-            }
+			ProcessTouches();
         }
 
         /// <summary>
@@ -53,30 +36,49 @@ namespace SlingShot
         /// </summary>
         void ProcessTouches()
         {
-            Touch touch;
-            if (Input.touchCount != 1 || (touch = Input.GetTouch(0)).phase != TouchPhase.Began)
-            {
-                return;
-            }
-            touch = Input.GetTouch(0);
-           
-            TouchDetected(this, new UserTouchEventArgs(touch));
-            Debug.Log(" 1" + touch.position);
-            TrackableHit hit;
-            TrackableHitFlags raycastFilter =
-                TrackableHitFlags.PlaneWithinBounds |
-                TrackableHitFlags.PlaneWithinPolygon;
+			Touch touch;
+			if(Input.touchCount > 0)
+			{
+				touch = Input.GetTouch(0);
+				if(touch.phase == TouchPhase.Ended)
+				{
+					Debugger.DebugObject(this, "Touch Ended");
+				}
 
-            if (Frame.Raycast(touch.position.x, touch.position.y, raycastFilter, out hit))
-            {
-                PlaneSelected(this, new PlaneSelectedEventArgs(hit, hit.Trackable as DetectedPlane));
-            }
-            Debug.Log(touch.position);
-        }
+				TouchDetected(this, new UserTouchEventArgs(touch));
+				TrackableHit hit;
+				TrackableHitFlags raycastFilter =
+					TrackableHitFlags.PlaneWithinBounds |
+					TrackableHitFlags.PlaneWithinPolygon;
+
+				if(Frame.Raycast(touch.position.x, touch.position.y, raycastFilter, out hit))
+				{
+					PlaneSelected(this, new PlaneSelectedEventArgs(hit, hit.Trackable as DetectedPlane));
+				}
+			}
+		}
 
         public void UnSubscribeFromSubject()
         {
             StaticRefrences.EventSubject.UnSubscribe(this);
         }
-    }
+
+		private void QuitOnConnectionErrors()
+		{
+			//Is the permission to use the camera granted?
+			if(Session.Status == SessionStatus.ErrorPermissionNotGranted)
+			{
+				StartCoroutine(CodelabUtils.ToastAndExit(
+					"Camera permission is needed to run this application.", 5));
+			}
+			else if(Session.Status.IsError())
+			{
+				// This covers a variety of errors.  See reference for details
+				// https://developers.google.com/ar/reference/unity/namespace/GoogleARCore
+				StartCoroutine(CodelabUtils.ToastAndExit(
+					"ARCore encountered a problem connecting. Please restart the app.", 5));
+			}
+		}
+
+	}
 }
