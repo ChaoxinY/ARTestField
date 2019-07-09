@@ -7,24 +7,25 @@ public class BulletSpawner : MonoBehaviour
 {
     #region Variables
     public GameObject bulletPrefab;
-    public Camera firstpersonCamera;
     public Text debugText;
     public float maximumLaunchForce;
     private Touch touch;
     private float lastFiredAngle;
+	private Quaternion originRotation;
     #endregion
 
     #region Initialization
     private void Start()
     {
-        SubscribeEvent();
+		originRotation = transform.localRotation;
+		SubscribeEvent();
     }
     #endregion
 
     #region Functionality
     private void Update()
     {
-        debugText.text = $"CameraPosition:{firstpersonCamera.transform.position }SpawnPosition{transform.position} FiredAngle {lastFiredAngle}";
+        debugText.text = $"lastFiredAngle: {lastFiredAngle}";
     }
     private void SubscribeEvent()
     {
@@ -47,30 +48,37 @@ public class BulletSpawner : MonoBehaviour
             FireSlingShot(CalculateSlingShotForce());
         }
     }
-
-    private Vector3 CalculateSlingShotForce()
+	private Vector3 CalculateSlingShotForce()
     {
         Vector3 force = Vector3.zero;
         //offset from the origin to the touch
         //max drag distance is screen.width*0.3
         float maxDragDistance = Screen.width * 0.3f;
         Vector2 originPoint = StaticRefrences.SlingerOriginPoint;
-        Vector2 downwardDirection = new Vector2(originPoint.x, originPoint.y + maxDragDistance);
-        Vector2 touchDirection = touch.position - originPoint;
-        float angle = Vector2.Angle(downwardDirection, touchDirection);
-        transform.Rotate(transform.right, angle);
-        lastFiredAngle = angle;
-        float launchForce = maximumLaunchForce * Mathf.Clamp(Vector2.Distance(originPoint, touch.position) / (Screen.width * 0.3f), 0, 1f);     
-        return force;
+
+		float adjescentLength = Math.Abs(originPoint.y - touch.position.y);	
+		float oppositeLength = Math.Abs(originPoint.x - touch.position.x);
+		float angle = (float)Math.Atan(oppositeLength/adjescentLength) * (float)(180.0 / Math.PI);
+
+		//Debugger.DebugObject(this, $"adjescentLength:{adjescentLength} oppositeLength:{oppositeLength}");
+		int rotationDirection = touch.position.x > originPoint.x ? -1 : 1 ;
+		//transform.eulerAngles = new Vector3(transform.eulerAngles.x, angle*rotationDirection, 0);
+		transform.Rotate(new Vector3(0,1,0), angle*rotationDirection/2,Space.World);
+		transform.Rotate(new Vector3(1, 0, 0), -20);
+		lastFiredAngle = angle;
+		float launchForce = maximumLaunchForce * Mathf.Clamp(Vector2.Distance(originPoint, touch.position) / (Screen.width * 0.3f), 0, 1f);
+		force = transform.forward * launchForce;
+		transform.localRotation = originRotation;
+		return force;
     }
 
     //Add vector parameter
     public void FireSlingShot(Vector3 force)
     {
 		Debug.Log($"Force{force}");
-        GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
-        bullet.GetComponentInChildren<Rigidbody>().AddForce(force, ForceMode.Impulse);
-    }
+		GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+        bullet.GetComponentInChildren<Rigidbody>().AddForce(force, ForceMode.Impulse);	
+	}
     #endregion
 }
 
