@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using UnityAD;
 using GoogleARCore;
 
-public class TowerSpawner : MonoBehaviour
+public class StageSpawner : MonoBehaviour, IEventHandler
 {
     #region Variables
     private TrackableHit trackableHit;
@@ -12,13 +12,15 @@ public class TowerSpawner : MonoBehaviour
     public Text debugText;
     private bool towerSpawned;
     private GameObject tower;
-    #endregion
+	#endregion
 
-    #region Initialization
-    private void Start()
-    {
-        SubscribeEvent();
-    }
+	#region Initialization
+	private void Awake()
+	{
+		StaticRefrences.EventSubject.PublisherSubscribed += SubscribeEvent;
+		Debug.Log(StaticRefrences.EventSubject);
+	}
+
     #endregion
 
     #region Functionality
@@ -28,19 +30,16 @@ public class TowerSpawner : MonoBehaviour
         towerSpawned = false;
     }
 
-    private void SubscribeEvent()
-    {
-        foreach (IEventPublisher eventPublisher in StaticRefrences.EventSubject.EventPublishers)
-        {
-            if (eventPublisher.GetType() == typeof(SlingShot.InputHandler))
-            {
-                SlingShot.InputHandler inputHandler = (SlingShot.InputHandler)eventPublisher;
-                inputHandler.PlaneSelected += OnPlaneSelected;
-            }
-        }
-    }
+	public void SubscribeEvent(object eventPublisher, PublisherSubscribedEventArgs publisherSubscribedEventArgs)
+	{
+		if(publisherSubscribedEventArgs.Publisher.GetType() == typeof(SlingShot.InputHandler))
+		{
+			SlingShot.InputHandler inputHandler = (SlingShot.InputHandler)eventPublisher;
+			inputHandler.PlaneSelected += OnPlaneSelected;
+		}
+	}
 
-    private void OnPlaneSelected(object eventPublisher ,PlaneSelectedEventArgs planeSelectedEventArgs)
+	private void OnPlaneSelected(object eventPublisher ,PlaneSelectedEventArgs planeSelectedEventArgs)
     {
         trackableHit = planeSelectedEventArgs.TrackableHit;
         if (!towerSpawned)

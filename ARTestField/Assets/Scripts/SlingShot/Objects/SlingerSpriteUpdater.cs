@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityAD;
 
-public class SlingerSpriteUpdater : MonoBehaviour
+public class SlingerSpriteUpdater : MonoBehaviour, IEventHandler
 {
     #region Variables
     public RectTransform slingerSpriteTransform;
@@ -11,27 +11,23 @@ public class SlingerSpriteUpdater : MonoBehaviour
     #endregion
 
     #region Initialization
-    private void Start()
-    {
-		//Debugger.DebugObject(this, $"Transform Position: {slingerSpriteTransform.anchoredPosition} Screen measurement:{Screen.width} ,{Screen.height} SlingerOriginPoint: {StaticRefrences.SlingerOriginPoint}");
-        SubscribeEvent();
-    }
-    #endregion
+	private void Awake()
+	{
+		StaticRefrences.EventSubject.PublisherSubscribed += SubscribeEvent;
+	}
+	#endregion
 
-    #region Functionality
-    private void SubscribeEvent()
-    {
-        foreach (IEventPublisher eventPublisher in StaticRefrences.EventSubject.EventPublishers)
-        {         
-            if (eventPublisher.GetType() == typeof(SlingShot.InputHandler))
-            {
-                SlingShot.InputHandler inputHandler = (SlingShot.InputHandler)eventPublisher;
-                inputHandler.TouchDetected += OnTouchDetected;
-            }
-        }
-    }
+	#region Functionality
+	public void SubscribeEvent(object eventPublisher, PublisherSubscribedEventArgs publisherSubscribedEventArgs)
+	{
+		if(publisherSubscribedEventArgs.Publisher.GetType()== typeof(SlingShot.InputHandler))
+		{
+			SlingShot.InputHandler inputHandler = (SlingShot.InputHandler)eventPublisher;
+			inputHandler.TouchDetected += OnTouchDetected;
+		}
+	}
 
-    private void OnTouchDetected(object eventPublisher, UserTouchEventArgs userTouchEventArgs)
+	private void OnTouchDetected(object eventPublisher, UserTouchEventArgs userTouchEventArgs)
     {      
         touch = userTouchEventArgs.Touch;
 		//Debugger.DebugObject(this, $"Touch position{touch.position}, called MinimumPoint{StaticRefrences.MinimumVerticalPoint}");

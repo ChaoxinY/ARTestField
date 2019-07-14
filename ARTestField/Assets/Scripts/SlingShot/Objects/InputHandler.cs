@@ -10,9 +10,8 @@ namespace SlingShot
         public event System.EventHandler<PlaneSelectedEventArgs> PlaneSelected;
         public event System.EventHandler<UserTouchEventArgs> TouchDetected;
 
-        void Awake()
+        void Start()
         {
-            Debug.Log(this is IEventPublisher eventPublisher);
             QuitOnConnectionErrors();
             StaticRefrences.EventSubject.Subscribe(this as IEventPublisher);
         }
@@ -58,7 +57,12 @@ namespace SlingShot
 			}
 		}
 
-        public void UnSubscribeFromSubject()
+		private void OnDestroy()
+		{
+			UnSubscribeFromSubject();
+		}
+
+		public void UnSubscribeFromSubject()
         {
             StaticRefrences.EventSubject.UnSubscribe(this);
         }

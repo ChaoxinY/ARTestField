@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityAD;
 
-public class BulletSpawner : MonoBehaviour
+public class BulletSpawner : MonoBehaviour, IEventHandler
 {
     #region Variables
     public GameObject bulletPrefab;
@@ -12,13 +12,18 @@ public class BulletSpawner : MonoBehaviour
     private Touch touch;
     private float lastFiredAngle;
 	private Quaternion originRotation;
-    #endregion
+	#endregion
 
-    #region Initialization
-    private void Start()
+	#region Initialization
+	private void Awake()
+	{
+		StaticRefrences.EventSubject.PublisherSubscribed += SubscribeEvent;
+
+	}
+
+	private void Start()
     {
 		originRotation = transform.localRotation;
-		SubscribeEvent();
     }
     #endregion
 
@@ -27,19 +32,17 @@ public class BulletSpawner : MonoBehaviour
     {
         debugText.text = $"lastFiredAngle: {lastFiredAngle}";
     }
-    private void SubscribeEvent()
-    {
-        foreach (IEventPublisher eventPublisher in StaticRefrences.EventSubject.EventPublishers)
-        {
-            if (eventPublisher.GetType() == typeof(SlingShot.InputHandler))
-            {
-                SlingShot.InputHandler inputHandler = (SlingShot.InputHandler)eventPublisher;
-                inputHandler.TouchDetected += OnTouchDetected;
-            }
-        }
-    }
 
-    private void OnTouchDetected(object sender, UserTouchEventArgs userTouchEventArgs)
+	public void SubscribeEvent(object eventPublisher, PublisherSubscribedEventArgs publisherSubscribedEventArgs)
+	{
+		if(publisherSubscribedEventArgs.Publisher.GetType()== typeof(SlingShot.InputHandler))
+		{
+			SlingShot.InputHandler inputHandler = (SlingShot.InputHandler)eventPublisher;
+			inputHandler.TouchDetected += OnTouchDetected;
+		}
+	}
+
+	private void OnTouchDetected(object sender, UserTouchEventArgs userTouchEventArgs)
     {
         touch = userTouchEventArgs.Touch;
 
