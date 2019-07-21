@@ -2464,12 +2464,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slingShotOriginPoint: {fileID: 0}
   bulletMassInputField: {fileID: 1434964438455422006}
-  slingShotLaunchForceInputField: {fileID: 0}
-  slingShotLaunchAngleInputField: {fileID: 0}
-  slingShotAngleCounterWeightInputField: {fileID: 0}
-  slingShotOriginXInputField: {fileID: 0}
-  slingShotOriginYInputField: {fileID: 0}
-  slingShotOriginZInputField: {fileID: 0}
+  slingShotLaunchForceInputField: {fileID: 4414800713797689026}
+  slingShotLaunchAngleInputField: {fileID: 8967254345584280355}
+  slingShotAngleCounterWeightInputField: {fileID: 4283869491573239286}
+  slingShotOriginXInputField: {fileID: 192052701800057045}
+  slingShotOriginYInputField: {fileID: 2855643938875319874}
+  slingShotOriginZInputField: {fileID: 5111692553270653409}
 --- !u!1 &7214672730732795873
 GameObject:
   m_ObjectHideFlags: 0
