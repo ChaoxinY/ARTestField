@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using UnityEngine;
 using UnityAD;
 
@@ -6,7 +6,8 @@ public class MinionModule : ICollideAble, IEventPublisher
 {
 	#region Variables
 	public Action GotHit { get; set; }
-	public int minionValue, vibrateLength;
+	public int minionValue;
+	public long vibrateLength;
 	public GameObject onHitParticleEffect;
 	public event EventHandler<MinionOnHitEventArgs> MinionHit;
 	private Collision lastCollision;
@@ -20,13 +21,16 @@ public class MinionModule : ICollideAble, IEventPublisher
 	#endregion
 
 	#region Functionality
-	public void ReactToCollision(Collision collision)
+	public void ReactToCollision(GameObject gameObject, Collision collision)
 	{
 		if(collision.gameObject.tag == "Bullet")
 		{
 			lastCollision = collision;
+			GameObject.Destroy(collision.gameObject);
 			MinionHit(this, new MinionOnHitEventArgs(minionValue));
 			GotHit();
+			UnSubscribeFromSubject();
+			GameObject.Destroy(gameObject);
 		}
 	}
 

@@ -13,14 +13,13 @@ public class Mininon : MonoBehaviour
 	private void Awake()
 	{
 		minionModule = MinionFactory.CreateMinionModule(minionPreset,gameObject);
-		Debug.Log($"{StaticRefrences.EventSubject} +{ minionModule}");	
 	}
 	#endregion
 
 	#region Functionality
 	private void OnCollisionEnter(Collision collision)
 	{
-		minionModule.ReactToCollision(collision);
+		minionModule.ReactToCollision(gameObject, collision);
 	}
 	#endregion
 }

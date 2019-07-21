@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12589b552f3cd724d8ce6c1fa74bd38c, type: 3}
   m_Name: NormalMinion
   m_EditorClassIdentifier: 
-  Rank: 0
+  Rank: 2
   onHitParticleFeedback: 1
   points: 1
   onHitVibrationLength: 2

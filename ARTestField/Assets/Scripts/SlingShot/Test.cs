@@ -7,6 +7,10 @@ public class Test : MonoBehaviour
 	public Vector2 offset;
 	private Vector2 origin = new Vector2(1,1);
 	public Quaternion originRotation;
+	public BallisticTrajectoryInfo ballisticTrajectoryInfo;
+	public GameObject dummy;
+	public GameObject parent;
+	public float distance;
 	#endregion
 
 	#region Initialization
@@ -17,6 +21,14 @@ public class Test : MonoBehaviour
 	#endregion
 
 	#region Functionality
+	private void Update()
+	{
+		if(parent!= null)
+		{
+			transform.position = parent.transform.position + parent.transform.forward * distance + parent.transform.up *distance;
+		}
+	}
+
 	public void CalculateAngle()
 	{
 		float angle = Vector2.Angle( origin, origin+offset );
@@ -31,6 +43,15 @@ public class Test : MonoBehaviour
 	public void ResetRotation()
 	{
 		transform.rotation = originRotation;
+	}
+
+	public void SpawnTrajectory()
+	{
+		Vector2[] positions = RigidBodyToolMethods.CalculateBallisticTrajectory(ballisticTrajectoryInfo, 100, 0.1f);
+		for(int i = 0; i < positions.Length; i++)
+		{
+			GameObject.Instantiate(dummy, new Vector3(0, positions[i].y, positions[i].x), Quaternion.identity);
+		}
 	}
 	#endregion
 }

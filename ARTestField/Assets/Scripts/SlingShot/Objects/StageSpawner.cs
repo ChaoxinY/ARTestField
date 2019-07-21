@@ -34,7 +34,7 @@ public class StageSpawner : MonoBehaviour, IEventHandler
 	{
 		if(publisherSubscribedEventArgs.Publisher.GetType() == typeof(SlingShot.InputHandler))
 		{
-			SlingShot.InputHandler inputHandler = (SlingShot.InputHandler)eventPublisher;
+			SlingShot.InputHandler inputHandler = (SlingShot.InputHandler)publisherSubscribedEventArgs.Publisher;
 			inputHandler.PlaneSelected += OnPlaneSelected;
 		}
 	}
@@ -51,9 +51,8 @@ public class StageSpawner : MonoBehaviour, IEventHandler
 
     private void SpawnTower()
     {
-        tower = Instantiate(towerPrefabToSpawn, trackableHit.Pose.position, Quaternion.identity);
+        tower = Instantiate(towerPrefabToSpawn, trackableHit.Pose.position + Vector3.up *0.8f, Quaternion.identity);
         var anchor = trackableHit.Trackable.CreateAnchor(trackableHit.Pose);
-        debugText.text = $"Tower SpawnPosition: {tower.transform.position}";
         // Make Andy model a child of the anchor.
         //Prevent static gameobject to slip away.
         tower.transform.parent = anchor.transform;

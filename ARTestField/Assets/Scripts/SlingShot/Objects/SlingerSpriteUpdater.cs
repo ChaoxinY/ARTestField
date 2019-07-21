@@ -22,7 +22,7 @@ public class SlingerSpriteUpdater : MonoBehaviour, IEventHandler
 	{
 		if(publisherSubscribedEventArgs.Publisher.GetType()== typeof(SlingShot.InputHandler))
 		{
-			SlingShot.InputHandler inputHandler = (SlingShot.InputHandler)eventPublisher;
+			SlingShot.InputHandler inputHandler = (SlingShot.InputHandler)publisherSubscribedEventArgs.Publisher;
 			inputHandler.TouchDetected += OnTouchDetected;
 		}
 	}
@@ -31,7 +31,7 @@ public class SlingerSpriteUpdater : MonoBehaviour, IEventHandler
     {      
         touch = userTouchEventArgs.Touch;
 		//Debugger.DebugObject(this, $"Touch position{touch.position}, called MinimumPoint{StaticRefrences.MinimumVerticalPoint}");
-		if(touch.position.y < StaticRefrences.MinimumVerticalPoint)
+		if(touch.position.y < StaticRefrences.MinimumScreenVerticalPoint)
 		{
 				UpdateSlingerSpritePosition();
         }
@@ -41,7 +41,7 @@ public class SlingerSpriteUpdater : MonoBehaviour, IEventHandler
     {
 		if(touch.phase == TouchPhase.Ended)
 		{
-			slingerSpriteTransform.position = StaticRefrences.SlingerOriginPoint;
+			slingerSpriteTransform.position = StaticRefrences.ScreenCenterPoint;
 		}
 		else
 		{
