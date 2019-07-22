@@ -33,7 +33,7 @@ public class DebugWidow : MonoBehaviour
 
 	public void ChangeSlingShotAngle()
 	{
-		StaticRefrences.slingShotLaunchAngle = GetFloadValueFromInputField(slingShotLaunchAngleInputField);
+		StaticRefrences.slingShotLaunchAngle = -Mathf.Abs(GetFloadValueFromInputField(slingShotLaunchAngleInputField));
 	}
 
 	public void ChangeSlingShotOriginXValue()
@@ -56,8 +56,10 @@ public class DebugWidow : MonoBehaviour
 
 	private float GetFloadValueFromInputField(InputField inputField)
 	{
-		float value = 0;
-		float.Parse(inputField.text);
+		if(float.TryParse(inputField.text, out float value))
+		{
+			value =float.Parse(inputField.text);
+		}
 		return value;
 	}
 

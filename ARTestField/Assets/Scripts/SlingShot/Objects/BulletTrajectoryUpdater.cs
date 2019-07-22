@@ -25,7 +25,6 @@ public class BulletTrajectoryUpdater : MonoBehaviour, IEventHandler
 	private void Start()
 	{
 		bulletOrigin.transform.position = StaticRefrences.slingShotOriginPoint;
-		bulletOrigin.transform.Rotate(new Vector3(1, 0, 0), StaticRefrences.slingShotLaunchAngle);
 		originRotation = bulletOrigin.transform.localRotation;
 		for(int i = 0; i < totaTrajectoryPredictions; i++)
 		{

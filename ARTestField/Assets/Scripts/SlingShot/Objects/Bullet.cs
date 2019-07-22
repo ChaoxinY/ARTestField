@@ -10,9 +10,13 @@ public class Bullet : MonoBehaviour
 
 	#region Initialization
 
-	private void Start()
+	private void Awake()
 	{
 		bulletRigidBody.mass = StaticRefrences.bulletMass;
+	}
+
+	private void Start()
+	{	
 		Destroy(gameObject.transform.parent.gameObject, lifeTime);
 	}
 	#endregion
