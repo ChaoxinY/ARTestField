@@ -3,7 +3,7 @@ using System.Linq;
 
 public static class MinionFactory
 {
-	public static MinionModule CreateMinionModule(MinionPreset minionPreset, GameObject gameObject)
+	public static MinionModule CreateMinionModule(GameObject gameObject, MinionPreset minionPreset)
 	{
 		MinionModule minionModule = new MinionModule();
 		//Load default minion prefab Assets/Prefabs/SlingShot/Mininon/MinionMaterial_Normal.mat
@@ -23,23 +23,27 @@ public static class MinionFactory
 			minionModule.onHitParticleEffect = Resources.Load($"Prefabs/SlingShot/Minion/MinionParticleEffect_{minionPreset.onHitParticleFeedback.ToString()}") as GameObject;
 			minionModule.GotHit += minionModule.PlayOnHitParticlEffect;
 		}
-		if (minionPreset.pathingInformation != null)
-		{
-			PathingInformation pathingInformation = minionPreset.pathingInformation.Value;
-			IPathFinder pathFinderToUse = null;
-			switch (pathingInformation.pathingAlgorithm)
-			{
-				case PathingAlgorithm.AStar:
-					pathFinderToUse = new AStarSearchAlgorithm();
-					break;
-			}
-			minionModule.pathFinder = pathFinderToUse;
-			minionModule.path = StaticRefrences.currentPathMap.paths.Where(path => path.pathName == pathingInformation.pathName).First();
-			minionModule.movementSpeedMultiplier = pathingInformation.speedMultiplier;
-		}
 		return minionModule;
 	}
+}
 
+public static class PathingModuleFactory
+{
+	public static PathingModule CreatePathingModule(GameObject gameObject, PathingInformation pathingInformation)
+	{
+		PathingModule pathingModule = new PathingModule();
+
+		switch(pathingInformation.pathingAlgorithm)
+		{
+			case PathingAlgorithm.AStar:
+				pathingModule.CalculatePath += PathFindingAlgorithms.CalculateAStarPath;
+				break;
+		}
+		
+		pathingModule.path = StaticRefrences.currentPathMap.paths.Where(path => path.pathName == pathingInformation.pathName).First();
+		pathingModule.movementSpeedMultiplier = pathingInformation.speedMultiplier;
+		return pathingModule;
+	}
 }
 
 

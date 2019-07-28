@@ -6,6 +6,7 @@ public static class StaticRefrences
 {
 	public static EventSubject EventSubject = new EventSubject();
 	public static CoroutineToolMethods CoroutineToolMethods = new CoroutineToolMethods();
+	public static SystemToolMethods SystemToolMethods = new SystemToolMethods();
 	public static UnityAD.UIToolMethods UIToolMethods = new UnityAD.UIToolMethods();
 
 	#region SlingShot

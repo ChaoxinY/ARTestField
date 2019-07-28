@@ -8,11 +8,11 @@ public class MinionPreset: ScriptableObject
 	public OnHitParticleFeedback onHitParticleFeedback;
 	public float points;
 	public long onHitVibrationLength;
-	public PathingInformation? pathingInformation;
 }
 
 public enum Rank
 {
+	None = 0,
 	Normal = 1,
 	Magic = 2,
 	Rare = 3,
@@ -22,13 +22,6 @@ public enum OnHitParticleFeedback
 {
 	None = 0,
 	HueExplosion = 1
-}
-
-public struct PathingInformation
-{
-	public PathingAlgorithm pathingAlgorithm;
-	public string pathName;
-	public float speedMultiplier;
 }
 
 public enum PathingAlgorithm

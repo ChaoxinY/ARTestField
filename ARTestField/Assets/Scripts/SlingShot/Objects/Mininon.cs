@@ -6,13 +6,16 @@ public class Mininon : MonoBehaviour
 {
 	#region Variables
 	public MinionPreset minionPreset;
+	public PathingInformation pathingInformation;
 	private MinionModule minionModule;
+	private PathingModule pathingModule;
 	#endregion
 
 	#region Initialization
 	private void Awake()
 	{
-		minionModule = MinionFactory.CreateMinionModule(minionPreset,gameObject);
+		minionModule = MinionFactory.CreateMinionModule(gameObject, minionPreset);
+		pathingModule = PathingModuleFactory.CreatePathingModule(gameObject, pathingInformation);
 	}
 	#endregion
 
@@ -24,7 +27,7 @@ public class Mininon : MonoBehaviour
 
 	private void FixedUpdate()
 	{
-		minionModule.FixedUpdateComponent();
+		pathingModule.FixedUpdateComponent();
 	}
 	#endregion
 }
