@@ -15,7 +15,7 @@ class PathFindingTest : MonoBehaviour
 
 	private IEnumerator CalculatePath()
 	{
-		List<Vector3> calculatedPath = AStarPathfinder.CalculatePath(pathNodes, pathNodes[0], pathNodes.Last());
+		List<Vector3> calculatedPath =  new AStarSearchAlgorithm().CalculatePath(pathNodes, pathNodes[0], pathNodes.Last());
 		foreach (Vector3 node in calculatedPath)
 		{
 			path.Enqueue(node);

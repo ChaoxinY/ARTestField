@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityAD;
+using System.Collections.Generic;
 
 public static class StaticRefrences
 {
@@ -18,6 +19,10 @@ public static class StaticRefrences
 	public static Vector2 ScreenCenterPoint { get; } = new Vector2(Screen.width * 0.5f, MinimumScreenVerticalPoint);
 	#endregion
 
+	#region AI
+	public static PathMap currentPathMap;
 
+	#endregion
+	
 }
 

@@ -21,6 +21,11 @@ public class Mininon : MonoBehaviour
 	{
 		minionModule.ReactToCollision(gameObject, collision);
 	}
+
+	private void FixedUpdate()
+	{
+		minionModule.FixedUpdateComponent();
+	}
 	#endregion
 }
 
