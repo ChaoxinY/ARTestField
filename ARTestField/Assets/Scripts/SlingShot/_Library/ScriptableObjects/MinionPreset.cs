@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 [CreateAssetMenu(fileName = "NewMinionPreset", menuName = "Presets/MinionPreset")]
 public class MinionPreset: ScriptableObject

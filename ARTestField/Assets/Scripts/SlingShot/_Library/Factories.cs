@@ -32,7 +32,8 @@ public static class PathingModuleFactory
 	public static PathingModule CreatePathingModule(GameObject gameObject, PathingInformation pathingInformation)
 	{
 		PathingModule pathingModule = new PathingModule();
-
+		pathingModule.moduleTransform = gameObject.transform;
+		
 		switch(pathingInformation.pathingAlgorithm)
 		{
 			case PathingAlgorithm.AStar:
@@ -40,7 +41,7 @@ public static class PathingModuleFactory
 				break;
 		}
 		
-		pathingModule.path = StaticRefrences.currentPathMap.paths.Where(path => path.pathName == pathingInformation.pathName).First();
+		pathingModule.nodeSection = StaticRefrences.currentPathMap.nodeSection.Where(nodeSection => nodeSection.sectionName == pathingInformation.nodeSectionName).First();
 		pathingModule.movementSpeedMultiplier = pathingInformation.speedMultiplier;
 		return pathingModule;
 	}

@@ -15,7 +15,7 @@ class PathFindingTest : MonoBehaviour
 
 	private IEnumerator CalculatePath()
 	{
-		List<Vector3> calculatedPath =  PathFindingAlgorithms.CalculateAStarPath(pathNodes, pathNodes[0], pathNodes.Last());
+		List<Vector3> calculatedPath =  PathFindingAlgorithms.CalculateAStarPath(pathNodes[0], pathNodes.Last());
 		foreach (Vector3 node in calculatedPath)
 		{
 			path.Enqueue(node);

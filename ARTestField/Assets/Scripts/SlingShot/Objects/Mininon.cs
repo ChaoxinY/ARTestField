@@ -1,6 +1,4 @@
-﻿using System;
-using UnityEngine;
-using UnityAD;
+﻿using UnityEngine;
 
 public class Mininon : MonoBehaviour
 {

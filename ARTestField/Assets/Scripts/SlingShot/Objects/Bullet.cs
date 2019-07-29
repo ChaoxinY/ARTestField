@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class Bullet : MonoBehaviour
 {
 	#region Variables
 	public float lifeTime;
 	public Rigidbody bulletRigidBody;
+	private int bouncesLeft = 2;
 	#endregion
 
 	#region Initialization
@@ -24,9 +24,14 @@ public class Bullet : MonoBehaviour
 	#region Functionality
 	private void OnCollisionEnter(Collision collision)
 	{
+		bouncesLeft -=1;
 		if(collision.gameObject.tag == "Minion")
 		{
 			Destroy(gameObject.transform.parent.gameObject);
+		}
+		if(bouncesLeft <= 0)
+		{
+			Destroy(gameObject.transform.parent.gameObject, lifeTime);
 		}
 	}
 	#endregion

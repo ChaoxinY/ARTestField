@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityAD;
-using System.Collections.Generic;
 
 public static class StaticRefrences
 {
@@ -22,7 +21,6 @@ public static class StaticRefrences
 
 	#region AI
 	public static PathMap currentPathMap;
-
 	#endregion
 	
 }
