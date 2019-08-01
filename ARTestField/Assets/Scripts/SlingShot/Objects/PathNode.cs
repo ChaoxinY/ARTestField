@@ -20,9 +20,9 @@ public class PathNode : MonoBehaviour
 	void FixedUpdate()
 	{
 		Color color = Color.red;
-		foreach (PathNode item in connectedNodes)
+		foreach(PathNode item in connectedNodes)
 		{
-			//Debug.DrawLine(NodePosition, item.NodePosition, color);
+			Debug.DrawLine(NodePosition, item.NodePosition, color);
 		}
 	}
 	#endregion

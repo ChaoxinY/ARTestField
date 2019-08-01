@@ -1,23 +1,48 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
+using System.Collections;
 using UnityEngine;
+using UnityAD;
+using System;
 
-public class PathMap : MonoBehaviour
+public class PathMap : MonoBehaviour, IEventPublisher
 {
 	#region Variables
-	public List<NodeSection> nodeSection;
+	public List<NodeSection> nodeSections;
+	public event EventHandler<NodeConnectionsGeneratedEventArgs> ConnectionsGenerated;
 	#endregion
 
 	#region Initialization
 	private void Awake()
 	{
 		StaticRefrences.currentPathMap = this;
-		foreach(NodeSection nodeSection in nodeSection)
+	}
+	private void Start()
+	{
+		StaticRefrences.EventSubject.Subscribe(this);
+		StartCoroutine(GenerateNodeConnections());
+	}
+	#endregion
+
+	#region Functionality
+	public void UnSubscribeFromSubject()
+	{
+		StaticRefrences.EventSubject.UnSubscribe(this);
+	}
+
+	private IEnumerator GenerateNodeConnections()
+	{
+		foreach(NodeSection nodeSection in nodeSections)
 		{
-			nodeSection.GenerateNodeConnections(nodeSection.totalNodeConnections);
-		}		
+			yield return StartCoroutine(nodeSection.GenerateNodeConnections(nodeSection.totalNodeConnections));
+		}
+		ConnectionsGenerated(this,new NodeConnectionsGeneratedEventArgs(true));
+	}
+
+	private void OnDestroy()
+	{
+		UnSubscribeFromSubject();
 	}
 	#endregion
 }
-	
+
 

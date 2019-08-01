@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-[System.Serializable]
-public class NodeSection 
+public class NodeSection : MonoBehaviour
 {
 	#region Variables
 	public List<PathNode> pathNodes;
@@ -11,30 +11,37 @@ public class NodeSection
 	public string sectionName;
 	#endregion
 
+	#region Initialization
+	#endregion
+
 	#region Functionality
-	public void GenerateNodeConnections(int totalConnections)
-	{
+	public IEnumerator GenerateNodeConnections(int totalConnections)
+	{	
 		foreach(PathNode pathNode in pathNodes)
 		{
 			//Set all other previous node this node
 			//Calculate distances to this node
-			Dictionary<float, PathNode> pathNodeDistances = new Dictionary<float, PathNode>();
+			Dictionary<PathNode, float> pathNodeDistances = new Dictionary<PathNode,float>();
 
 			foreach(PathNode otherPathNode in pathNodes)
 			{
-				pathNodeDistances.Add(Vector3.Distance(pathNode.NodePosition, otherPathNode.NodePosition), otherPathNode);
-			}
+				pathNodeDistances.Add(otherPathNode, Vector3.Distance(pathNode.NodePosition, otherPathNode.NodePosition));
+			}	
+			pathNodes = pathNodeDistances.OrderBy(node => node.Value).Select(node => node.Key).ToList();
 
-			pathNodes = pathNodeDistances.OrderBy(node => node.Key).Select(node => node.Value).ToList();
-
+			int j = 0;
 			int i = 0;
-			while(pathNode.connectedNodes.Count < totalConnections)
+			while(j < totalConnections)
 			{
+				//Closest is not the node itself and connected node does not contain the closest
 				if(pathNodes[i] != pathNode)
-				{
+				{			
 					pathNode.connectedNodes.Add(pathNodes[i]);
-				}
+					//pathNodes[i].connectedNodes.Add(pathNode);
+					j++;
+				}			
 				i++;
+				yield return null;
 			}
 		}
 	}

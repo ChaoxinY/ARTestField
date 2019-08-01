@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Linq;
+using System;
 
 public static class MinionFactory
 {
@@ -32,17 +33,24 @@ public static class PathingModuleFactory
 	public static PathingModule CreatePathingModule(GameObject gameObject, PathingInformation pathingInformation)
 	{
 		PathingModule pathingModule = new PathingModule();
-		pathingModule.moduleTransform = gameObject.transform;
-		
+		pathingModule.objectTransform = gameObject.transform;
+
 		switch(pathingInformation.pathingAlgorithm)
 		{
 			case PathingAlgorithm.AStar:
 				pathingModule.CalculatePath += PathFindingAlgorithms.CalculateAStarPath;
 				break;
 		}
-		
-		pathingModule.nodeSection = StaticRefrences.currentPathMap.nodeSection.Where(nodeSection => nodeSection.sectionName == pathingInformation.nodeSectionName).First();
-		pathingModule.movementSpeedMultiplier = pathingInformation.speedMultiplier;
+
+		try
+		{
+			pathingModule.nodeSection = StaticRefrences.currentPathMap.nodeSections.Where(nodeSection => nodeSection.sectionName == pathingInformation.nodeSectionName).First();
+		}
+		catch(NullReferenceException e)
+		{
+			Debug.Log("No pathing node section found");
+		}
+			pathingModule.movementSpeedMultiplier = pathingInformation.speedMultiplier;
 		return pathingModule;
 	}
 }

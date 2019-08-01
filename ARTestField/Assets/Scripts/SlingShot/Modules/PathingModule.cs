@@ -3,77 +3,110 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityAD;
+using System.Threading.Tasks;
 
 /// <summary>
 /// Functionalities:
 /// </summary>
 
-public class PathingModule : IFixedUpdater
+public class PathingModule : IFixedUpdater, IEventHandler
 {
-	#region Variables
-	public Func<PathNode, PathNode, List<Vector3>> CalculatePath;
+	#region Variabless
+	public Func<PathfindingCalculationParameters, Task<List<Vector3>>> CalculatePath;
 	public NodeSection nodeSection;
 	public float movementSpeedMultiplier;
-	public Transform moduleTransform;
+	public Transform objectTransform;
 	private Queue<Vector3> currentPath = new Queue<Vector3>();
 	private Vector3 nextPosition = Vector3.zero;
+	private List<Vector3> debugPath = new List<Vector3>();
+	private bool activated, calculatingPath;
 	#endregion
 
 	#region Initialization
+	public PathingModule()
+	{
+		StaticRefrences.EventSubject.PublisherSubscribed += SubscribeEvent;
+	}
 	#endregion
 
 	#region Functionality
+	public void SubscribeEvent(object eventPublisher, PublisherSubscribedEventArgs publisherSubscribedEventArgs)
+	{
+		if(publisherSubscribedEventArgs.Publisher.GetType()== typeof(PathMap))
+		{
+			PathMap pathMap = (PathMap)publisherSubscribedEventArgs.Publisher;
+			pathMap.ConnectionsGenerated += ActivateModule;
+		}
+	}
+
 	public void FixedUpdateComponent()
-	{	
-		Move();
-		DebugCurrentPath();
+	{
+		if(activated)
+		{
+			DebugCurrentPath();
+			if(currentPath.Count != 0) { Move(); }
+			else if(currentPath.Count == 0 && !calculatingPath) { AddPath(); }
+		}
+	}
+
+	private void ActivateModule(object sender, NodeConnectionsGeneratedEventArgs nodeConnectionsGenerateEventArgs)
+	{
+		activated = nodeConnectionsGenerateEventArgs.Finished;
 	}
 
 	private void Move()
 	{
-		if(Vector3.Distance(moduleTransform.position, nextPosition) > 0.001f && nextPosition != Vector3.zero)
+		nextPosition = currentPath.Peek();
+		if(Vector3.Distance(objectTransform.position, nextPosition) > 0.001f && nextPosition != Vector3.zero)
 		{
-			moduleTransform.position = Vector3.MoveTowards(moduleTransform.position, nextPosition, Time.deltaTime*movementSpeedMultiplier);
+			objectTransform.position = Vector3.MoveTowards(objectTransform.position, nextPosition, Time.deltaTime*movementSpeedMultiplier);
 		}
-		else
+		else 
 		{
-			if(currentPath.Count != 0)
-			{
-				nextPosition = currentPath.Dequeue();
-			}
-			else
-			{
-				AddPath();
-			}
+			nextPosition = currentPath.Dequeue();
 		}
 	}
 
 	private void DebugCurrentPath()
 	{
-		List<Vector3> positions = currentPath.ToList();
-		for(int i = 0; i < positions.Count; i++)
+		for(int i = 0; i < debugPath.Count; i++)
 		{
-			int j = i == positions.Count-1f ? 0 : 1;
-			Debug.DrawLine(positions[i], positions[i+j], Color.green);
-		}	
+			int j = i == debugPath.Count-1 ? i-1 : i+1;
+			if(i == 0)
+			{
+				j = 0;
+			}
+			Debug.DrawLine(debugPath[i], debugPath[j], Color.green);
+		}
 	}
 
-	private void AddPath()
+	private async void AddPath()
 	{
+		calculatingPath = true;
 		currentPath.Clear();
 		PathNode startNode = nextPosition == Vector3.zero ? nodeSection.pathNodes[0] : nodeSection.pathNodes.Where(node => node.NodePosition == nextPosition).ToList().First();
 		List<PathNode> uniqueNodeList = nodeSection.pathNodes.Where(node => node.NodePosition != nextPosition).ToList();
 		int randomListValue = StaticRefrences.SystemToolMethods.GenerateRandomIEnumerablePosition(uniqueNodeList);
 		PathNode endNode = nextPosition == Vector3.zero ? nodeSection.pathNodes.Last() : uniqueNodeList[randomListValue];
 
-		List<Vector3> calculatedPath = CalculatePath(startNode, endNode);
-		Debug.Log($"StartNode: {startNode.gameObject} EndNode: {endNode}");
+		PathfindingCalculationParameters pathfindingCalculationParameters = new PathfindingCalculationParameters
+		{
+			StartNode = startNode,
+			EndNode = endNode
+		};
+		List<Vector3> calculatedPath = await CalculatePath(pathfindingCalculationParameters);
+		calculatingPath = false;
+		if(calculatedPath.Count == 0)
+		{			
+			return;
+		}
+		debugPath = calculatedPath;
 		foreach(Vector3 node in calculatedPath)
 		{
 			currentPath.Enqueue(node);
 		}
-		nextPosition = currentPath.Dequeue();
 	}
+
 	#endregion
 }
 

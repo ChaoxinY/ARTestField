@@ -31,7 +31,6 @@ public class MinionModule : ICollideAble, IEventPublisher
 		if (collision.gameObject.tag == "Bullet")
 		{
 			lastCollision = collision;
-			GameObject.Destroy(collision.gameObject);
 			MinionHit(this, new MinionOnHitEventArgs(minionValue));
 			GotHit();
 			UnSubscribeFromSubject();

@@ -32,3 +32,12 @@ public class MinionOnHitEventArgs : EventArgs
 	}
 }
 
+public class NodeConnectionsGeneratedEventArgs : EventArgs
+{
+	public bool Finished;
+	public NodeConnectionsGeneratedEventArgs(bool finished)
+	{
+		Finished = finished;
+	}
+}
+
