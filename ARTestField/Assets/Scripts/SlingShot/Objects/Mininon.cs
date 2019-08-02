@@ -13,7 +13,7 @@ public class Mininon : MonoBehaviour
 	private void Awake()
 	{
 		minionModule = MinionFactory.CreateMinionModule(gameObject, minionPreset);
-		pathingModule = PathingModuleFactory.CreatePathingModule(this, gameObject, pathingInformation);
+		pathingModule = PathingModuleFactory.CreatePathingModule(gameObject, pathingInformation);
 	}
 	#endregion
 

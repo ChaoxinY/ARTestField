@@ -1,17 +1,39 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityAD;
 using UnityEngine;
 
-public class NodeSection : MonoBehaviour
+public interface INodeSection
+{
+	List<PathNode> PathNodes { get; }
+	string SectionName { get; }
+	bool GenerationFinished { get;}
+}
+
+public class NodeSection : MonoBehaviour, INodeSection
 {
 	#region Variables
-	public List<PathNode> pathNodes;
-	public int totalNodeConnections;
-	public string sectionName;
+	public List<PathNode> PathNodes { get { return pathNodes; } }
+	public string SectionName { get { return sectionName; } }
+	public bool GenerationFinished { get { return generationFinished; } }
+
+	[SerializeField]
+	private List<PathNode> pathNodes;
+	[SerializeField]
+	private int totalNodeConnections;
+	[SerializeField]
+	private string sectionName;
+	private bool generationFinished;
 	#endregion
 
 	#region Initialization
+	private void Start()
+	{
+		StaticRefrences.EventSubject.Subscribe(this);
+		StartCoroutine(GenerateNodeConnections(totalNodeConnections));
+	}
 	#endregion
 
 	#region Functionality
@@ -44,6 +66,17 @@ public class NodeSection : MonoBehaviour
 				yield return null;
 			}
 		}
+		generationFinished = true;
+	}
+
+	public void UnSubscribeFromSubject()
+	{
+		StaticRefrences.EventSubject.UnSubscribe(this);
+	}
+
+	private void OnDestroy()
+	{
+		UnSubscribeFromSubject();
 	}
 	#endregion
 }

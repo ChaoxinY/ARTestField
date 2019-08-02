@@ -1,14 +1,10 @@
 ﻿using System.Collections.Generic;
-using System.Collections;
 using UnityEngine;
-using UnityAD;
-using System;
 
-public class PathMap : MonoBehaviour, IEventPublisher
+public class PathMap : MonoBehaviour
 {
 	#region Variables
 	public List<NodeSection> nodeSections;
-	public event EventHandler<NodeConnectionsGeneratedEventArgs> ConnectionsGenerated;
 	#endregion
 
 	#region Initialization
@@ -16,32 +12,10 @@ public class PathMap : MonoBehaviour, IEventPublisher
 	{
 		StaticRefrences.currentPathMap = this;
 	}
-	private void Start()
-	{
-		StaticRefrences.EventSubject.Subscribe(this);
-		StartCoroutine(GenerateNodeConnections());
-	}
+
 	#endregion
 
 	#region Functionality
-	public void UnSubscribeFromSubject()
-	{
-		StaticRefrences.EventSubject.UnSubscribe(this);
-	}
-
-	private IEnumerator GenerateNodeConnections()
-	{
-		foreach(NodeSection nodeSection in nodeSections)
-		{
-			yield return StartCoroutine(nodeSection.GenerateNodeConnections(nodeSection.totalNodeConnections));
-		}
-		ConnectionsGenerated(this,new NodeConnectionsGeneratedEventArgs(true));
-	}
-
-	private void OnDestroy()
-	{
-		UnSubscribeFromSubject();
-	}
 	#endregion
 }
 

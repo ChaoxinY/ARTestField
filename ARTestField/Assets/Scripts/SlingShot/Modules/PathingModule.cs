@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 /// Functionalities:
 /// </summary>
 
-public class PathingModule : IFixedUpdater, IEventHandler
+public class PathingModule : IFixedUpdater
 {
 	#region Variabless
 	public Func<PathfindingCalculationParameters, Task<List<Vector3>>> CalculatePath;
-	public NodeSection nodeSection;
+	public INodeSection nodeSection;
 	public float movementSpeedMultiplier;
 	public Transform objectTransform;
 	private Queue<Vector3> currentPath = new Queue<Vector3>();
@@ -23,25 +23,13 @@ public class PathingModule : IFixedUpdater, IEventHandler
 	#endregion
 
 	#region Initialization
-	public PathingModule()
-	{
-		StaticRefrences.EventSubject.PublisherSubscribed += SubscribeEvent;
-	}
 	#endregion
 
 	#region Functionality
-	public void SubscribeEvent(object eventPublisher, PublisherSubscribedEventArgs publisherSubscribedEventArgs)
-	{
-		if(publisherSubscribedEventArgs.Publisher.GetType()== typeof(PathMap))
-		{
-			PathMap pathMap = (PathMap)publisherSubscribedEventArgs.Publisher;
-			pathMap.ConnectionsGenerated += ActivateModule;
-		}
-	}
 
 	public void FixedUpdateComponent()
 	{
-		if(activated)
+		if(nodeSection.GenerationFinished)
 		{
 			DebugCurrentPath();
 			if(currentPath.Count != 0) { Move(); }
@@ -84,10 +72,10 @@ public class PathingModule : IFixedUpdater, IEventHandler
 	{
 		calculatingPath = true;
 		currentPath.Clear();
-		PathNode startNode = nextPosition == Vector3.zero ? nodeSection.pathNodes[0] : nodeSection.pathNodes.Where(node => node.NodePosition == nextPosition).ToList().First();
-		List<PathNode> uniqueNodeList = nodeSection.pathNodes.Where(node => node.NodePosition != nextPosition).ToList();
+		PathNode startNode = nextPosition == Vector3.zero ? nodeSection.PathNodes[0] : nodeSection.PathNodes.Where(node => node.NodePosition == nextPosition).ToList().First();
+		List<PathNode> uniqueNodeList = nodeSection.PathNodes.Where(node => node.NodePosition != nextPosition).ToList();
 		int randomListValue = StaticRefrences.SystemToolMethods.GenerateRandomIEnumerablePosition(uniqueNodeList);
-		PathNode endNode = nextPosition == Vector3.zero ? nodeSection.pathNodes.Last() : uniqueNodeList[randomListValue];
+		PathNode endNode = nextPosition == Vector3.zero ? nodeSection.PathNodes.Last() : uniqueNodeList[randomListValue];
 
 		PathfindingCalculationParameters pathfindingCalculationParameters = new PathfindingCalculationParameters
 		{

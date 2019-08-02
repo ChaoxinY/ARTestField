@@ -44,13 +44,13 @@ public static class PathingModuleFactory
 
 		try
 		{
-			pathingModule.nodeSection = StaticRefrences.currentPathMap.nodeSections.Where(nodeSection => nodeSection.sectionName == pathingInformation.nodeSectionName).First();
+			pathingModule.nodeSection = StaticRefrences.currentPathMap.nodeSections.Where(nodeSection => nodeSection.SectionName == pathingInformation.nodeSectionName).First();
 		}
 		catch(NullReferenceException e)
 		{
 			Debug.Log("No pathing node section found");
 		}
-			pathingModule.movementSpeedMultiplier = pathingInformation.speedMultiplier;
+		pathingModule.movementSpeedMultiplier = pathingInformation.speedMultiplier;
 		return pathingModule;
 	}
 }
