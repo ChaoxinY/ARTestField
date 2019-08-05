@@ -8,10 +8,10 @@ public static class MinionFactory
 	{
 		MinionModule minionModule = new MinionModule();
 		//Load default minion prefab Assets/Prefabs/SlingShot/Mininon/MinionMaterial_Normal.mat
-		Debug.Log($"Prefabs/SlingShot/Minion/MinionMaterial_{minionPreset.Rank.ToString()}");
+		//Debug.Log($"Prefabs/SlingShot/Minion/MinionMaterial_{minionPreset.rank.ToString()}");
 		minionModule.minion = gameObject;
-		gameObject.GetComponent<MeshRenderer>().material = Resources.Load($"Prefabs/SlingShot/Minion/MinionMaterial_{minionPreset.Rank.ToString()}") as Material;
-		minionModule.minionValue = (int)minionPreset.Rank;
+		gameObject.GetComponent<MeshRenderer>().material = Resources.Load($"Prefabs/SlingShot/Minion/MinionMaterial_{minionPreset.rank.ToString()}") as Material;
+		minionModule.minionValue = (int)minionPreset.rank;
 
 		if(minionPreset.onHitVibrationLength > 0)
 		{
@@ -44,7 +44,7 @@ public static class PathingModuleFactory
 
 		try
 		{
-			pathingModule.nodeSection = StaticRefrences.currentPathMap.nodeSections.Where(nodeSection => nodeSection.SectionName == pathingInformation.nodeSectionName).First();
+			pathingModule.nodeSection = StaticRefrences.currentPathMap.INodeSections.Where(nodeSection => nodeSection.SectionName == pathingInformation.nodeSectionName).First();
 		}
 		catch(NullReferenceException e)
 		{

@@ -26,9 +26,11 @@ public class UserTouchEventArgs : EventArgs
 public class MinionOnHitEventArgs : EventArgs
 {
 	public int MinionValue;
-	public MinionOnHitEventArgs(int minionValue)
+	public MinionModule MinionModule;
+	public MinionOnHitEventArgs(int minionValue, MinionModule minionModule)
 	{
 		MinionValue = minionValue;
+		MinionModule = minionModule;
 	}
 }
 
@@ -40,4 +42,3 @@ public class NodeConnectionsGeneratedEventArgs : EventArgs
 		Finished = finished;
 	}
 }
-

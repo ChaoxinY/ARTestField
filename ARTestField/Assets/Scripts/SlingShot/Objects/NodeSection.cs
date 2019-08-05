@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityAD;
 using UnityEngine;
 
 public interface INodeSection
@@ -31,13 +30,12 @@ public class NodeSection : MonoBehaviour, INodeSection
 	#region Initialization
 	private void Start()
 	{
-		StaticRefrences.EventSubject.Subscribe(this);
 		StartCoroutine(GenerateNodeConnections(totalNodeConnections));
 	}
 	#endregion
 
 	#region Functionality
-	public IEnumerator GenerateNodeConnections(int totalConnections)
+	private IEnumerator GenerateNodeConnections(int totalConnections)
 	{	
 		foreach(PathNode pathNode in pathNodes)
 		{
@@ -69,14 +67,5 @@ public class NodeSection : MonoBehaviour, INodeSection
 		generationFinished = true;
 	}
 
-	public void UnSubscribeFromSubject()
-	{
-		StaticRefrences.EventSubject.UnSubscribe(this);
-	}
-
-	private void OnDestroy()
-	{
-		UnSubscribeFromSubject();
-	}
 	#endregion
 }

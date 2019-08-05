@@ -13,6 +13,11 @@ public struct PathingInformation
 	public float speedMultiplier;
 }
 
+public enum PathingAlgorithm
+{
+	AStar = 0
+}
+
 public class PathfindingCalculationParameters
 {
 	public PathNode StartNode;
@@ -44,47 +49,49 @@ public static class PathFindingAlgorithms
 	//Coroutine calcualtion
 	public async static Task<List<Vector3>> CalculateAStarPath(PathfindingCalculationParameters pathfindingCalculationParameters)
 	{
-		 PathNode startNode = pathfindingCalculationParameters.StartNode;
-		 PathNode endNode = pathfindingCalculationParameters.EndNode;
+		PathNode startNode = pathfindingCalculationParameters.StartNode;
+		PathNode endNode = pathfindingCalculationParameters.EndNode;
 
 		List<Vector3> path = new List<Vector3>();
 		List<AStarPathNode> priorityQueue = new List<AStarPathNode>();
 		List<AStarPathNode> travelledNodes = new List<AStarPathNode>();
-		
-		priorityQueue.Add(new AStarPathNode{pathNode = startNode, endGoal = endNode});
+
+		priorityQueue.Add(new AStarPathNode { pathNode = startNode, endGoal = endNode });
 
 		//If the endnode is still not reached 
-		while(priorityQueue.Count != 0 && !travelledNodes.Select(node=> node.pathNode).Contains(endNode))
+		while(priorityQueue.Count != 0 && !travelledNodes.Select(node => node.pathNode).Contains(endNode))
 		{
 			AStarPathNode currentPathNode = priorityQueue[0];
 			priorityQueue.Remove(currentPathNode);
 			travelledNodes.Add(currentPathNode);
 			foreach(PathNode adjacentNode in currentPathNode.pathNode.connectedNodes)
 			{
-				AStarPathNode adjacentAstarNode =  new AStarPathNode
+				AStarPathNode adjacentAstarNode = new AStarPathNode
 				{
 					pathNode = adjacentNode,
 					endGoal = endNode,
-					previousNode = currentPathNode,					
+					previousNode = currentPathNode,
 				};
 				adjacentAstarNode.pathLength = currentPathNode.pathLength + adjacentAstarNode.DistanceToPreviousNode;
 				//Add the current node to priority que
-				if(!travelledNodes.Contains(adjacentAstarNode) && !priorityQueue.Contains(adjacentAstarNode))
+
+				if(!travelledNodes.Select(node => node.pathNode).ToList().Contains(adjacentAstarNode.pathNode) && !priorityQueue.Select(node => node.pathNode).ToList().Contains(adjacentAstarNode.pathNode))
 				{
-					priorityQueue.Add(adjacentAstarNode);				
+					priorityQueue.Add(adjacentAstarNode);
 				}
-				await Task.Delay((int)Time.deltaTime);
 			}
 			//The wrong waypoint is added towards the calculated path no matter what.
+			if(priorityQueue.Count == 0 && !travelledNodes.Select(node => node.pathNode).Contains(endNode))
+			{
+				return path;
+			}
+
 			priorityQueue = priorityQueue.OrderBy(node => node.PathWeight).ToList();
-			AStarPathNode closestNode = priorityQueue.First();
+			await Task.Delay(StaticRefrences.FixedTimeInMiliseconds);
 		}
 
 		//Return failed path if the end node could not be reached with the nodes given.
-		if(!travelledNodes.Select(node => node.pathNode).Contains(endNode))
-		{
-			return path;
-		}
+
 
 		//Keep adding the pathnode to the path untill we hit the start pathnode
 		AStarPathNode pathNodeToAdd = travelledNodes.Last();
@@ -94,7 +101,7 @@ public static class PathFindingAlgorithms
 			path.Add(pathNodeToAdd.pathNode.NodePosition);
 			DebugLogQueue.Add(pathNodeToAdd.pathNode);
 			pathNodeToAdd = pathNodeToAdd.previousNode;
-			await Task.Delay((int)Time.deltaTime);
+			await Task.Delay(StaticRefrences.FixedTimeInMiliseconds);
 		}
 		path.Reverse();
 		//Debug.Log(pathfindingCalculationParameters.PathFinder.CalculatedPath.Count());

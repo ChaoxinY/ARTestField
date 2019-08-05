@@ -1,0 +1,77 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &5295344739201289713
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1266263911477468429, guid: a6203123aa0823a4cadda313e2112e12,
+        type: 3}
+      propertyPath: m_Name
+      value: Minion_Magic
+      objectReference: {fileID: 0}
+    - target: {fileID: 1266263911477468432, guid: a6203123aa0823a4cadda313e2112e12,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1266263911477468432, guid: a6203123aa0823a4cadda313e2112e12,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1266263911477468432, guid: a6203123aa0823a4cadda313e2112e12,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1266263911477468432, guid: a6203123aa0823a4cadda313e2112e12,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1266263911477468432, guid: a6203123aa0823a4cadda313e2112e12,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1266263911477468432, guid: a6203123aa0823a4cadda313e2112e12,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1266263911477468432, guid: a6203123aa0823a4cadda313e2112e12,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1266263911477468432, guid: a6203123aa0823a4cadda313e2112e12,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1266263911477468432, guid: a6203123aa0823a4cadda313e2112e12,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1266263911477468432, guid: a6203123aa0823a4cadda313e2112e12,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1266263911477468432, guid: a6203123aa0823a4cadda313e2112e12,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6385912532051664280, guid: a6203123aa0823a4cadda313e2112e12,
+        type: 3}
+      propertyPath: minionPreset
+      value: 
+      objectReference: {fileID: 11400000, guid: abac330d1e2ee9f4cad85f6bd647cedc,
+        type: 2}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a6203123aa0823a4cadda313e2112e12, type: 3}

@@ -3,7 +3,6 @@
 public class Bullet : MonoBehaviour
 {
 	#region Variables
-	public float lifeTime;
 	public Rigidbody bulletRigidBody;
 	private int bouncesLeft = 2;
 	#endregion
@@ -15,10 +14,6 @@ public class Bullet : MonoBehaviour
 		bulletRigidBody.mass = StaticRefrences.bulletMass;
 	}
 
-	private void Start()
-	{	
-		Destroy(gameObject.transform.parent.gameObject, lifeTime);
-	}
 	#endregion
 
 	#region Functionality
@@ -27,11 +22,11 @@ public class Bullet : MonoBehaviour
 		bouncesLeft -=1;
 		if(collision.gameObject.tag == "Minion")
 		{
-			Destroy(gameObject.transform.parent.gameObject);
+			//Destroy(gameObject.transform.parent.gameObject);
 		}
 		if(bouncesLeft <= 0)
 		{
-			Destroy(gameObject.transform.parent.gameObject, lifeTime);
+			//Destroy(gameObject.transform.parent.gameObject);
 		}
 	}
 	#endregion

@@ -22,6 +22,9 @@ public static class StaticRefrences
 	#region AI
 	public static PathMap currentPathMap;
 	#endregion
-	
+
+	#region Time
+	public static int FixedTimeInMiliseconds { get { return (int)(Time.fixedDeltaTime*1000f);  } }
+	#endregion
 }
 

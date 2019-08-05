@@ -21,6 +21,7 @@ public class MinionModule : ICollideAble, IEventPublisher
 	#region Initialization
 	public MinionModule()
 	{
+		//Debug.Log(StaticRefrences.EventSubject.PublisherSubscribed);	
 		StaticRefrences.EventSubject.Subscribe(this);
 	}
 	#endregion
@@ -31,7 +32,7 @@ public class MinionModule : ICollideAble, IEventPublisher
 		if (collision.gameObject.tag == "Bullet")
 		{
 			lastCollision = collision;
-			MinionHit(this, new MinionOnHitEventArgs(minionValue));
+			MinionHit(this, new MinionOnHitEventArgs(minionValue,this));
 			GotHit();
 			UnSubscribeFromSubject();
 			GameObject.Destroy(gameObject);

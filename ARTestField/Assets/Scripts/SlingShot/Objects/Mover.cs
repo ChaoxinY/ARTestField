@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-public class Blocker : MonoBehaviour
+public class Mover : MonoBehaviour
 {
 	#region Variables
 	public PathingInformation pathingInformation;

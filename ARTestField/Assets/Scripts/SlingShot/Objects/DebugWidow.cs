@@ -18,49 +18,40 @@ public class DebugWidow : MonoBehaviour
 	#region Functionality
 	public void ChangeBulletMass()
 	{
-		StaticRefrences.bulletMass = GetFloadValueFromInputField(bulletMassInputField);
+		StaticRefrences.bulletMass = UtilityLibrary.GetFloatValueFromInputField(bulletMassInputField);
 	}
 
 	public void ChangeSlingShotLaunchForce()
 	{
-		StaticRefrences.slingShotMaximumLaunchForce = GetFloadValueFromInputField(slingShotLaunchForceInputField);
+		StaticRefrences.slingShotMaximumLaunchForce = UtilityLibrary.GetFloatValueFromInputField(slingShotLaunchForceInputField);
 	}
 
 	public void ChangeSlingShotAngleCounterWeight()
 	{
-		StaticRefrences.slingShotAngleCounterWeight = GetFloadValueFromInputField(slingShotAngleCounterWeightInputField);
+		StaticRefrences.slingShotAngleCounterWeight = UtilityLibrary.GetFloatValueFromInputField(slingShotAngleCounterWeightInputField);
 	}
 
 	public void ChangeSlingShotAngle()
 	{
-		StaticRefrences.slingShotLaunchAngle = -Mathf.Abs(GetFloadValueFromInputField(slingShotLaunchAngleInputField));
+		StaticRefrences.slingShotLaunchAngle = -Mathf.Abs(UtilityLibrary.GetFloatValueFromInputField(slingShotLaunchAngleInputField));
 	}
 
 	public void ChangeSlingShotOriginXValue()
 	{
-		StaticRefrences.slingShotOriginPoint.x = GetFloadValueFromInputField(slingShotOriginXInputField);
+		StaticRefrences.slingShotOriginPoint.x = UtilityLibrary.GetFloatValueFromInputField(slingShotOriginXInputField);
 		UpdateslingShotOriginPoint();
 	}
 
 	public void ChangeSlingShotOriginYValue()
 	{
-		StaticRefrences.slingShotOriginPoint.y = GetFloadValueFromInputField(slingShotOriginYInputField);
+		StaticRefrences.slingShotOriginPoint.y = UtilityLibrary.GetFloatValueFromInputField(slingShotOriginYInputField);
 		UpdateslingShotOriginPoint();
 	}
 
 	public void ChangeSlingShotOriginZValue()
 	{
-		StaticRefrences.slingShotOriginPoint.z  = GetFloadValueFromInputField(slingShotOriginZInputField);
+		StaticRefrences.slingShotOriginPoint.z  = UtilityLibrary.GetFloatValueFromInputField(slingShotOriginZInputField);
 		UpdateslingShotOriginPoint();
-	}
-
-	private float GetFloadValueFromInputField(InputField inputField)
-	{
-		if(float.TryParse(inputField.text, out float value))
-		{
-			value =float.Parse(inputField.text);
-		}
-		return value;
 	}
 
 	private void UpdateslingShotOriginPoint()

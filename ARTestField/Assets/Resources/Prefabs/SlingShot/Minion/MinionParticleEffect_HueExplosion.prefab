@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 8232903530591482985}
   - component: {fileID: 8138436066270448375}
   - component: {fileID: 8109596578197352417}
+  - component: {fileID: 2701142101115891511}
   m_Layer: 0
-  m_Name: MinionParticleEffect_hueExplosion
+  m_Name: MinionParticleEffect_HueExplosion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4774,3 +4775,16 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!114 &2701142101115891511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8235509005641923925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c0937685839d7940b17d7cb1cb49f15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lifeTime: 2

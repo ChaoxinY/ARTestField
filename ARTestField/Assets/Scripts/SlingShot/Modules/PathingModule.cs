@@ -89,10 +89,7 @@ public class PathingModule : IFixedUpdater
 			return;
 		}
 		debugPath = calculatedPath;
-		foreach(Vector3 node in calculatedPath)
-		{
-			currentPath.Enqueue(node);
-		}
+		currentPath = new Queue<Vector3>(calculatedPath);
 	}
 
 	#endregion
