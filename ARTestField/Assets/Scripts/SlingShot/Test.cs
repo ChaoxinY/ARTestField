@@ -5,12 +5,14 @@ public class Test : MonoBehaviour
 {
 	#region Variables
 	public Vector2 offset;
+	public float forcePercentage;
 	private Vector2 origin = new Vector2(1,1);
 	public Quaternion originRotation;
 	public BallisticTrajectoryInfo ballisticTrajectoryInfo;
 	public GameObject dummy;
 	public GameObject parent;
 	public float distance;
+	public GameObject bulletPrefab;
 	#endregion
 
 	#region Initialization
@@ -44,9 +46,20 @@ public class Test : MonoBehaviour
 	{
 		transform.rotation = originRotation;
 	}
-
+	public void FireTest()
+	{
+		GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+		bullet.GetComponentInChildren<Rigidbody>().AddForce(transform.forward*StaticRefrences.slingShotMaximumLaunchForce*forcePercentage, ForceMode.Impulse);
+	}
 	public void SpawnTrajectory()
 	{
+		BallisticTrajectoryInfo ballisticTrajectoryInfo = new BallisticTrajectoryInfo
+		{
+			gravity = StaticRefrences.Gravity,
+			//Initial velocity is wrong !!
+			initialVelocity = 5*forcePercentage/StaticRefrences.bulletMass,
+			launchAngle = Mathf.Abs(StaticRefrences.slingShotLaunchAngle)
+		};
 		Vector2[] positions = RigidBodyToolMethods.CalculateBallisticTrajectory(ballisticTrajectoryInfo, 100, 0.1f);
 		for(int i = 0; i < positions.Length; i++)
 		{

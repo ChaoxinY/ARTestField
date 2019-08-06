@@ -37,7 +37,7 @@ public class StageSpawner : MonoBehaviour, IEventHandler, IEventPublisher
     {
         Destroy(stage);
         stageSpawned = false;
-		StageDeleted(this, new EventArgs());
+		StageDeleted?.Invoke(this, new EventArgs());
 	}
 
 	public void UnSubscribeFromSubject()
@@ -47,6 +47,7 @@ public class StageSpawner : MonoBehaviour, IEventHandler, IEventPublisher
 
 	public void SetCurrentStage()
 	{
+
 		stagePrefabToSpawn = availableStages[Mathf.Clamp(UtilityLibrary.GetIntValueFromInputField(stageInputfield),0,availableStages.Count-1)];
 		Debug.Log($"currentStage {stagePrefabToSpawn}");
 	}

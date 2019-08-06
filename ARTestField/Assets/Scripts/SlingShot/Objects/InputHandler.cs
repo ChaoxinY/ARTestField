@@ -44,7 +44,7 @@ namespace SlingShot
 					Debugger.DebugObject(this, "Touch Ended");
 				}
 
-				TouchDetected(this, new UserTouchEventArgs(touch));
+				TouchDetected?.Invoke(this, new UserTouchEventArgs(touch));
 				TrackableHit hit;
 				TrackableHitFlags raycastFilter =
 					TrackableHitFlags.PlaneWithinBounds |
@@ -52,7 +52,7 @@ namespace SlingShot
 
 				if(Frame.Raycast(touch.position.x, touch.position.y, raycastFilter, out hit))
 				{
-					PlaneSelected(this, new PlaneSelectedEventArgs(hit, hit.Trackable as DetectedPlane));
+					PlaneSelected?.Invoke(this, new PlaneSelectedEventArgs(hit, hit.Trackable as DetectedPlane));
 				}
 			}
 		}

@@ -13,7 +13,7 @@ public struct Wave
 	[SerializeField]
 	private float minMovementSpeed, maxMovementSpeed, minSpawnInterval, maxSpawnInterval;
 	public MinMaxValue<float> MinionMovementSpeed { get { return new MinMaxValue<float> { minValue = minMovementSpeed, maxValue = maxMovementSpeed }; } }
-	public MinMaxValue<float> spawnInterval { get { return new MinMaxValue<float> { minValue = minSpawnInterval, maxValue = maxSpawnInterval }; } }
+	public MinMaxValue<float> SpawnInterval { get { return new MinMaxValue<float> { minValue = minSpawnInterval, maxValue = maxSpawnInterval }; } }
 }
 
 public class WaveSpawner : MonoBehaviour, IEventHandler
@@ -40,7 +40,7 @@ public class WaveSpawner : MonoBehaviour, IEventHandler
 	private void Start()
 	{
 		pathMap = StaticRefrences.currentPathMap;
-	}
+	}	
 	#endregion
 
 	#region Functionality
@@ -52,12 +52,32 @@ public class WaveSpawner : MonoBehaviour, IEventHandler
 			minionModule.MinionHit += SpawnMinion;
 		}
 		else if(publisherSubscribedEventArgs.Publisher.GetType()== typeof(LevelInitializer))
-		{
+		{ 		
 			LevelInitializer levelInitializer = (LevelInitializer)publisherSubscribedEventArgs.Publisher;
 			levelInitializer.LevelStarted += StartSpawning;
 			levelInitializer.LevelEnded += StopSpawning;
 		}
 	}
+
+private void OnDestroy()
+{
+	StaticRefrences.EventSubject.PublisherSubscribed -= SubscribeEvent;
+	foreach(IEventPublisher eventPublisher in StaticRefrences.EventSubject.EventPublishers)
+	{
+		if(eventPublisher.GetType()== typeof(LevelInitializer))
+		{
+			LevelInitializer levelInitializer = (LevelInitializer)eventPublisher;
+			levelInitializer.LevelStarted -= StartSpawning;
+			levelInitializer.LevelEnded -= StopSpawning;
+		}
+
+		else if(eventPublisher.GetType()== typeof(MinionModule))
+		{
+			MinionModule minionModule = (MinionModule)eventPublisher;
+			minionModule.MinionHit -= SpawnMinion;
+		}
+	}
+}
 
 	private void SpawnMinion(object eventPublisher, MinionOnHitEventArgs minionOnHitEventArgs)
 	{
@@ -76,6 +96,7 @@ public class WaveSpawner : MonoBehaviour, IEventHandler
 	private void StartSpawning(object objects, EventArgs e)
 	{
 		currentSpawnLoop = SpawnLoop();
+		Debug.Log(this);
 		StartCoroutine(currentSpawnLoop);
 	}
 
@@ -96,7 +117,7 @@ public class WaveSpawner : MonoBehaviour, IEventHandler
 			InitializeMinion();			
 		}
 
-		float spawnTimer = UnityEngine.Random.Range(currentWave.spawnInterval.minValue, currentWave.spawnInterval.maxValue);
+		float spawnTimer = UnityEngine.Random.Range(currentWave.SpawnInterval.minValue, currentWave.SpawnInterval.maxValue);
 		while(currentWaveValue > 0)
 		{
 			spawnTimer -= Time.fixedDeltaTime;
@@ -104,7 +125,7 @@ public class WaveSpawner : MonoBehaviour, IEventHandler
 			if(spawnTimer <=0)
 			{
 				InitializeMinion();
-				spawnTimer = UnityEngine.Random.Range(currentWave.spawnInterval.minValue, currentWave.spawnInterval.maxValue);
+				spawnTimer = UnityEngine.Random.Range(currentWave.SpawnInterval.minValue, currentWave.SpawnInterval.maxValue);
 			}
 		}
 		waveQueue.Dequeue();
@@ -133,8 +154,11 @@ public class WaveSpawner : MonoBehaviour, IEventHandler
 		if(minion.GetComponent<Mover>())
 		{	
 			Mover mover = minion.GetComponent<Mover>();
-			mover.pathingInformation.nodeSectionName = pathMap.INodeSections[randomNodeSectionValue].SectionName;	
-			mover.pathingInformation.speedMultiplier = UnityEngine.Random.Range(currentWave.MinionMovementSpeed.minValue, currentWave.MinionMovementSpeed.maxValue);
+			mover.pathingInformation = new PathingInformation
+			{
+				nodeSectionName = pathMap.INodeSections[randomNodeSectionValue].SectionName,
+				speedMultiplier = UnityEngine.Random.Range(currentWave.MinionMovementSpeed.minValue, currentWave.MinionMovementSpeed.maxValue)
+			};
 		}
 		//Initialize minion		
 	}

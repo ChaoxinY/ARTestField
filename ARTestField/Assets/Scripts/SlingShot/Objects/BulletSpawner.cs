@@ -42,7 +42,7 @@ public class BulletSpawner : MonoBehaviour, IEventHandler
 			}         
         }
     }
-    public void FireSlingShot(Vector3 force)
+    private void FireSlingShot(Vector3 force)
     {	
 		GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
         bullet.GetComponentInChildren<Rigidbody>().AddForce(force, ForceMode.Impulse);

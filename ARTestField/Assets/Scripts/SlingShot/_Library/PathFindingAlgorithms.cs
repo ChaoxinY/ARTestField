@@ -73,14 +73,13 @@ public static class PathFindingAlgorithms
 					previousNode = currentPathNode,
 				};
 				adjacentAstarNode.pathLength = currentPathNode.pathLength + adjacentAstarNode.DistanceToPreviousNode;
-				//Add the current node to priority que
-
 				if(!travelledNodes.Select(node => node.pathNode).ToList().Contains(adjacentAstarNode.pathNode) && !priorityQueue.Select(node => node.pathNode).ToList().Contains(adjacentAstarNode.pathNode))
 				{
 					priorityQueue.Add(adjacentAstarNode);
 				}
 			}
-			//The wrong waypoint is added towards the calculated path no matter what.
+
+			//Return failed path if the end node could not be reached with the nodes given.
 			if(priorityQueue.Count == 0 && !travelledNodes.Select(node => node.pathNode).Contains(endNode))
 			{
 				return path;
@@ -89,28 +88,16 @@ public static class PathFindingAlgorithms
 			priorityQueue = priorityQueue.OrderBy(node => node.PathWeight).ToList();
 			await Task.Delay(StaticRefrences.FixedTimeInMiliseconds);
 		}
-
-		//Return failed path if the end node could not be reached with the nodes given.
-
-
+	
 		//Keep adding the pathnode to the path untill we hit the start pathnode
 		AStarPathNode pathNodeToAdd = travelledNodes.Last();
-		List<PathNode> DebugLogQueue = new List<PathNode>();
 		while(pathNodeToAdd.pathNode != startNode)
 		{
 			path.Add(pathNodeToAdd.pathNode.NodePosition);
-			DebugLogQueue.Add(pathNodeToAdd.pathNode);
 			pathNodeToAdd = pathNodeToAdd.previousNode;
 			await Task.Delay(StaticRefrences.FixedTimeInMiliseconds);
 		}
 		path.Reverse();
-		//Debug.Log(pathfindingCalculationParameters.PathFinder.CalculatedPath.Count());
-		DebugLogQueue.Reverse();
 		return path;
-		//foreach(PathNode pathNode in DebugLogQueue)
-		//{
-		//	Debug.Log(pathNode.name);
-		//}
-		//path = currentPathNode.path.Select(node => node.NodePosition).ToList();
 	}
 }

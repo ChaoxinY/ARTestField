@@ -57,8 +57,7 @@ public class BulletTrajectoryUpdater : MonoBehaviour, IEventHandler
 			ballisticTrajectoryInfo = new BallisticTrajectoryInfo
 			{
 				gravity = StaticRefrences.Gravity,
-				//Initial velocity is wrong !!
-				initialVelocity = lauchForce/StaticRefrences.bulletMass,
+				initialVelocity = lauchForce/StaticRefrences.bulletMass/Time.fixedDeltaTime,
 				launchAngle = Mathf.Abs(StaticRefrences.slingShotLaunchAngle)
 			};
 			//Debugger.DebugObject(this, $"LaunchForce:{lauchForce}");

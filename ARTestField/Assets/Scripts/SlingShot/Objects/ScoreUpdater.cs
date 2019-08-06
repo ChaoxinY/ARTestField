@@ -25,6 +25,16 @@ public class ScoreUpdater : MonoBehaviour, IEventHandler
 			MinionModule minionModule = (MinionModule)publisherSubscribedEventArgs.Publisher;
 			minionModule.MinionHit += UpdateScoreText;
 		}
+		else if(publisherSubscribedEventArgs.Publisher.GetType() == typeof(StageSpawner))
+		{
+			StageSpawner stageSpawner = (StageSpawner)publisherSubscribedEventArgs.Publisher;
+			stageSpawner.StageDeleted += OnStageDeleted;
+		}
+	}
+
+	private void OnStageDeleted(object sender, EventArgs e)
+	{
+		scoreText.text = 0.ToString();
 	}
 
 	private void UpdateScoreText(object eventPublisher, MinionOnHitEventArgs minionOnHitEventArgs)

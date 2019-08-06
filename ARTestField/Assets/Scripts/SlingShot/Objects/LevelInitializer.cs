@@ -16,7 +16,7 @@ public class LevelInitializer : MonoBehaviour, IEventPublisher
 	#endregion
 
 	#region Initialization
-	private void Awake()
+	private void Start()
 	{
 		StaticRefrences.EventSubject.Subscribe(this);
 	}
@@ -32,7 +32,7 @@ public class LevelInitializer : MonoBehaviour, IEventPublisher
 				gameObject.SetActive(false);
 			}
 		}
-		LevelStarted(this, new EventArgs());
+		LevelStarted?.Invoke(this, new EventArgs());
 		StartCoroutine(LevelCountDown());
 	}
 
@@ -57,7 +57,7 @@ public class LevelInitializer : MonoBehaviour, IEventPublisher
 			countDownText.text = ((int)timeLeft).ToString();
 		}
 
-		LevelEnded(this, new EventArgs());
+		LevelEnded?.Invoke(this, new EventArgs());
 
 	}
 	#endregion

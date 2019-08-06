@@ -5,6 +5,7 @@ using UnityEngine.Events;
 public class OnDeathTrigger :MonoBehaviour
 {
 	#region Variables
+	public GameObject eventSender;
 	public UnityEvent onDeathEvent;
 	#endregion
 
@@ -15,7 +16,10 @@ public class OnDeathTrigger :MonoBehaviour
 
 	private void OnDestroy()
 	{
-		onDeathEvent.Invoke();
+		if(eventSender.activeInHierarchy)
+		{
+			onDeathEvent.Invoke();
+		}
 	}
 	#endregion
 }

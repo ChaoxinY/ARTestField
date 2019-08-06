@@ -49,7 +49,7 @@ public class PathingModule : IFixedUpdater
 		{
 			objectTransform.position = Vector3.MoveTowards(objectTransform.position, nextPosition, Time.deltaTime*movementSpeedMultiplier);
 		}
-		else 
+		else
 		{
 			nextPosition = currentPath.Dequeue();
 		}
@@ -70,13 +70,16 @@ public class PathingModule : IFixedUpdater
 
 	private async void AddPath()
 	{
+		if(nextPosition == Vector3.zero)
+		{
+			nextPosition = nodeSection.PathNodes[0].NodePosition;
+		}		
 		calculatingPath = true;
 		currentPath.Clear();
-		PathNode startNode = nextPosition == Vector3.zero ? nodeSection.PathNodes[0] : nodeSection.PathNodes.Where(node => node.NodePosition == nextPosition).ToList().First();
+		PathNode startNode = nodeSection.PathNodes.Where(node => node.NodePosition == nextPosition).ToList().First();
 		List<PathNode> uniqueNodeList = nodeSection.PathNodes.Where(node => node.NodePosition != nextPosition).ToList();
 		int randomListValue = StaticRefrences.SystemToolMethods.GenerateRandomIEnumerablePosition(uniqueNodeList);
-		PathNode endNode = nextPosition == Vector3.zero ? nodeSection.PathNodes.Last() : uniqueNodeList[randomListValue];
-
+		PathNode endNode = uniqueNodeList[randomListValue];
 		PathfindingCalculationParameters pathfindingCalculationParameters = new PathfindingCalculationParameters
 		{
 			StartNode = startNode,
@@ -85,7 +88,7 @@ public class PathingModule : IFixedUpdater
 		List<Vector3> calculatedPath = await CalculatePath(pathfindingCalculationParameters);
 		calculatingPath = false;
 		if(calculatedPath.Count == 0)
-		{			
+		{
 			return;
 		}
 		debugPath = calculatedPath;

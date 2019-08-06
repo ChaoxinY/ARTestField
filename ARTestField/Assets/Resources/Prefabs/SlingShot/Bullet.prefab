@@ -121,7 +121,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6a02609cf05aea4297b66198a11363a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifeTime: 5
   bulletRigidBody: {fileID: 3055092785226707032}
 --- !u!1 &6096249215105895821
 GameObject:
@@ -132,6 +131,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4915729830742091118}
+  - component: {fileID: 1527563399692295733}
   m_Layer: 0
   m_Name: Bullet
   m_TagString: Untagged
@@ -154,3 +154,16 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1527563399692295733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6096249215105895821}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c0937685839d7940b17d7cb1cb49f15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lifeTime: 3
