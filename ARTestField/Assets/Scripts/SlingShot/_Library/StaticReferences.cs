@@ -17,6 +17,8 @@ public static class StaticRefrences
 	public static float slingShotAngleCounterWeight = 1.8f;
 	public static Vector3 slingShotOriginPoint = new Vector3(0, -0.1f, 0.6f);
 	public static Vector2 ScreenCenterPoint { get; } = new Vector2(Screen.width * 0.5f, MinimumScreenVerticalPoint);
+	public static int TotalTrajectoryPredictions { get; } = 10;
+	public static float predictionIntervals= 0.01f;
 	#endregion
 
 	#region AI

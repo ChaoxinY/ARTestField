@@ -27,6 +27,24 @@ public class SlingerSpriteUpdater : MonoBehaviour, IEventHandler
 		}
 	}
 
+	public void UnSubScribeEvent()
+	{
+		StaticRefrences.EventSubject.PublisherSubscribed -= SubscribeEvent;
+		foreach(IEventPublisher eventPublisher in StaticRefrences.EventSubject.EventPublishers)
+		{
+			if(eventPublisher.GetType()== typeof(SlingShot.InputHandler))
+			{
+				SlingShot.InputHandler inputHandler = (SlingShot.InputHandler)eventPublisher;
+				inputHandler.TouchDetected -= OnTouchDetected;
+			}
+		}
+	}
+
+	private void OnDestroy()
+	{
+		UnSubScribeEvent();
+	}
+
 	private void OnTouchDetected(object eventPublisher, UserTouchEventArgs userTouchEventArgs)
     {      
         touch = userTouchEventArgs.Touch;

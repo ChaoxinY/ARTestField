@@ -28,6 +28,24 @@ public class BulletSpawner : MonoBehaviour, IEventHandler
 		}
 	}
 
+	public void UnSubScribeEvent()
+	{
+		StaticRefrences.EventSubject.PublisherSubscribed -= SubscribeEvent;
+		foreach(IEventPublisher eventPublisher in StaticRefrences.EventSubject.EventPublishers)
+		{
+			if(eventPublisher.GetType()== typeof(SlingShot.InputHandler))
+			{
+				SlingShot.InputHandler inputHandler = (SlingShot.InputHandler)eventPublisher;
+				inputHandler.TouchDetected -= OnTouchDetected;
+			}
+		}
+	}
+
+	private void OnDestroy()
+	{
+		UnSubScribeEvent();
+	}
+
 	private void OnTouchDetected(object sender, UserTouchEventArgs userTouchEventArgs)
     {
         touch = userTouchEventArgs.Touch;
@@ -47,6 +65,6 @@ public class BulletSpawner : MonoBehaviour, IEventHandler
 		GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
         bullet.GetComponentInChildren<Rigidbody>().AddForce(force, ForceMode.Impulse);
 	}
-    #endregion
+	#endregion
 }
 

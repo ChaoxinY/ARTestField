@@ -59,25 +59,29 @@ public class WaveSpawner : MonoBehaviour, IEventHandler
 		}
 	}
 
-private void OnDestroy()
-{
-	StaticRefrences.EventSubject.PublisherSubscribed -= SubscribeEvent;
-	foreach(IEventPublisher eventPublisher in StaticRefrences.EventSubject.EventPublishers)
+	public void UnSubScribeEvent()
 	{
-		if(eventPublisher.GetType()== typeof(LevelInitializer))
+		StaticRefrences.EventSubject.PublisherSubscribed -= SubscribeEvent;
+		foreach(IEventPublisher eventPublisher in StaticRefrences.EventSubject.EventPublishers)
 		{
-			LevelInitializer levelInitializer = (LevelInitializer)eventPublisher;
-			levelInitializer.LevelStarted -= StartSpawning;
-			levelInitializer.LevelEnded -= StopSpawning;
-		}
+			if(eventPublisher.GetType()== typeof(LevelInitializer))
+			{
+				LevelInitializer levelInitializer = (LevelInitializer)eventPublisher;
+				levelInitializer.LevelStarted -= StartSpawning;
+				levelInitializer.LevelEnded -= StopSpawning;
+			}
 
-		else if(eventPublisher.GetType()== typeof(MinionModule))
-		{
-			MinionModule minionModule = (MinionModule)eventPublisher;
-			minionModule.MinionHit -= SpawnMinion;
+			else if(eventPublisher.GetType()== typeof(MinionModule))
+			{
+				MinionModule minionModule = (MinionModule)eventPublisher;
+				minionModule.MinionHit -= SpawnMinion;
+			}
 		}
 	}
-}
+	private void OnDestroy()
+	{
+		UnSubScribeEvent();
+	}
 
 	private void SpawnMinion(object eventPublisher, MinionOnHitEventArgs minionOnHitEventArgs)
 	{

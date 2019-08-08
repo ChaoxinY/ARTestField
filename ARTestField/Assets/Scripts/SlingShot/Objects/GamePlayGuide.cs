@@ -35,6 +35,30 @@ public class GamePlayGuide : MonoBehaviour, IEventHandler
 		}
 	}
 
+	public void UnSubScribeEvent()
+	{
+		StaticRefrences.EventSubject.PublisherSubscribed -= SubscribeEvent;
+		foreach(IEventPublisher eventPublisher in StaticRefrences.EventSubject.EventPublishers)
+		{
+			if(eventPublisher.GetType() == typeof(SlingShot.InputHandler))
+			{
+				SlingShot.InputHandler inputHandler = (SlingShot.InputHandler)eventPublisher;
+				inputHandler.PlaneSelected -= OnPlaneSelected;
+			}
+
+			else if(eventPublisher.GetType() == typeof(StageSpawner))
+			{
+				StageSpawner stageSpawner = (StageSpawner)eventPublisher;
+				stageSpawner.StageDeleted -= OnStageDeleted;
+			}
+		}
+	}
+
+	private void OnDestroy()
+	{
+		UnSubScribeEvent();
+	}
+
 	private void OnStageDeleted(object sender, EventArgs e)
 	{
 		guideTextGameObject.SetActive(true);

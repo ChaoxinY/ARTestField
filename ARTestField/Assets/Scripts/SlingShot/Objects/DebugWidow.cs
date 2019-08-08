@@ -13,6 +13,7 @@ public class DebugWidow : MonoBehaviour
 	public InputField slingShotOriginXInputField;
 	public InputField slingShotOriginYInputField;
 	public InputField slingShotOriginZInputField;
+	public InputField trajectoryInterval;
 	#endregion
 
 	#region Functionality
@@ -52,6 +53,11 @@ public class DebugWidow : MonoBehaviour
 	{
 		StaticRefrences.slingShotOriginPoint.z  = UtilityLibrary.GetFloatValueFromInputField(slingShotOriginZInputField);
 		UpdateslingShotOriginPoint();
+	}
+
+	public void ChangeTrajectoryIntervals()
+	{
+		StaticRefrences.predictionIntervals = UtilityLibrary.GetFloatValueFromInputField(trajectoryInterval);
 	}
 
 	private void UpdateslingShotOriginPoint()

@@ -32,6 +32,29 @@ public class ScoreUpdater : MonoBehaviour, IEventHandler
 		}
 	}
 
+	public void UnSubScribeEvent()
+	{
+		StaticRefrences.EventSubject.PublisherSubscribed -= SubscribeEvent;
+		foreach(IEventPublisher eventPublisher in StaticRefrences.EventSubject.EventPublishers)
+		{
+			if(eventPublisher.GetType()== typeof(MinionModule))
+			{
+				MinionModule minionModule = (MinionModule)eventPublisher;
+				minionModule.MinionHit -= UpdateScoreText;
+			}
+			else if(eventPublisher.GetType() == typeof(StageSpawner))
+			{
+				StageSpawner stageSpawner = (StageSpawner)eventPublisher;
+				stageSpawner.StageDeleted -= OnStageDeleted;
+			}
+		}
+	}
+
+	private void OnDestroy()
+	{
+		UnSubScribeEvent();
+	}
+
 	private void OnStageDeleted(object sender, EventArgs e)
 	{
 		scoreText.text = 0.ToString();
@@ -42,6 +65,7 @@ public class ScoreUpdater : MonoBehaviour, IEventHandler
 		score += minionOnHitEventArgs.MinionValue;
 		scoreText.text = score.ToString();
 	}
+
 	#endregion
 }
 

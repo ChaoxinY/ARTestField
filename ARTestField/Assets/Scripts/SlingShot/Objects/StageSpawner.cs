@@ -18,7 +18,7 @@ public class StageSpawner : MonoBehaviour, IEventHandler, IEventPublisher
 	private TrackableHit trackableHit;
 	private GameObject stagePrefabToSpawn;
 	#endregion
-
+	
 	#region Initialization
 	private void Awake()
 	{
@@ -61,6 +61,24 @@ public class StageSpawner : MonoBehaviour, IEventHandler, IEventPublisher
 		}
 	}
 
+	public void UnSubScribeEvent()
+	{
+		StaticRefrences.EventSubject.PublisherSubscribed -= SubscribeEvent;
+		foreach(IEventPublisher eventPublisher in StaticRefrences.EventSubject.EventPublishers)
+		{
+			if(eventPublisher.GetType()== typeof(SlingShot.InputHandler))
+			{
+				SlingShot.InputHandler inputHandler = (SlingShot.InputHandler)eventPublisher;
+				inputHandler.PlaneSelected -= OnPlaneSelected;
+			}
+		}
+	}
+
+	private void OnDestroy()
+	{
+		UnSubScribeEvent();
+	}
+
 	private void OnPlaneSelected(object eventPublisher, PlaneSelectedEventArgs planeSelectedEventArgs)
     {
         trackableHit = planeSelectedEventArgs.TrackableHit;
@@ -79,11 +97,6 @@ public class StageSpawner : MonoBehaviour, IEventHandler, IEventPublisher
         //Prevent static gameobject to slip away.
         stage.transform.parent = anchor.transform;
     }
-
-	private void OnDestroy()
-	{
-		UnSubscribeFromSubject();
-	}
 	#endregion
 }
 
