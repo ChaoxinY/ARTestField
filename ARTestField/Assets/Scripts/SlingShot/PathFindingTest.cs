@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Collections;
 
+//Temporal code to test functionality
 class PathFindingTest : MonoBehaviour
 {
 	public List<PathNode> pathNodes;

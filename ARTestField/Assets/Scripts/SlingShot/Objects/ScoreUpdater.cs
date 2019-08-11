@@ -57,7 +57,8 @@ public class ScoreUpdater : MonoBehaviour, IEventHandler
 
 	private void OnStageDeleted(object sender, EventArgs e)
 	{
-		scoreText.text = 0.ToString();
+		score = 0;
+		scoreText.text = score.ToString();
 	}
 
 	private void UpdateScoreText(object eventPublisher, MinionOnHitEventArgs minionOnHitEventArgs)

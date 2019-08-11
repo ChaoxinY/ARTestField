@@ -8,6 +8,32 @@ using System.Threading.Tasks;
 /// <summary>
 /// Functionalities:
 /// </summary>
+public static class PathingModuleFactory
+{
+	public static PathingModule CreatePathingModule(GameObject gameObject, PathingInformation pathingInformation)
+	{
+		PathingModule pathingModule = new PathingModule();
+		pathingModule.objectTransform = gameObject.transform;
+
+		switch(pathingInformation.pathingAlgorithm)
+		{
+			case PathingAlgorithm.AStar:
+				pathingModule.CalculatePath += PathFindingAlgorithms.CalculateAStarPath;
+				break;
+		}
+
+		try
+		{
+			pathingModule.nodeSection = StaticRefrences.currentPathMap.INodeSections.Where(nodeSection => nodeSection.SectionName == pathingInformation.nodeSectionName).First();
+		}
+		catch(NullReferenceException e)
+		{
+			Debug.Log("No pathing node section found");
+		}
+		pathingModule.movementSpeedMultiplier = pathingInformation.speedMultiplier;
+		return pathingModule;
+	}
+}
 
 public class PathingModule : IFixedUpdater
 {
@@ -37,16 +63,12 @@ public class PathingModule : IFixedUpdater
 		}
 	}
 
-	private void ActivateModule(object sender, NodeConnectionsGeneratedEventArgs nodeConnectionsGenerateEventArgs)
-	{
-		activated = nodeConnectionsGenerateEventArgs.Finished;
-	}
-
 	private void Move()
 	{
 		nextPosition = currentPath.Peek();
 		if(Vector3.Distance(objectTransform.position, nextPosition) > 0.001f && nextPosition != Vector3.zero)
 		{
+			//Move behaviour 
 			objectTransform.position = Vector3.MoveTowards(objectTransform.position, nextPosition, Time.deltaTime*movementSpeedMultiplier);
 		}
 		else

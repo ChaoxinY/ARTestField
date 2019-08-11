@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
+//Temporal code to test functionality
 public class Test : MonoBehaviour
 {
 	#region Variables

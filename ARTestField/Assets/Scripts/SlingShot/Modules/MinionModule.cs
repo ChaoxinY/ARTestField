@@ -2,10 +2,43 @@
 using UnityEngine;
 using UnityAD;
 
-/// <summary>
-/// Functionalities:
-/// </summary>
+public static class MinionFactory
+{
+	public static MinionModule CreateMinionModule(GameObject gameObject, MinionPreset minionPreset)
+	{
+		MinionModule minionModule = new MinionModule();
+		minionModule.minion = gameObject;
+		gameObject.GetComponent<MeshRenderer>().material = Resources.Load($"Prefabs/SlingShot/Minion/MinionMaterial_{minionPreset.rank.ToString()}") as Material;
+		minionModule.minionValue = (int)minionPreset.rank;
 
+		if(minionPreset.onHitVibrationLength > 0)
+		{
+			minionModule.vibrateLength = minionPreset.onHitVibrationLength;
+			minionModule.GotHit += minionModule.VibrateDevice;
+		}
+
+		if(minionPreset.onHitParticleFeedback != OnHitParticleFeedback.None)
+		{
+			minionModule.onHitParticleEffect = Resources.Load($"Prefabs/SlingShot/Minion/MinionParticleEffect_{minionPreset.onHitParticleFeedback.ToString()}") as GameObject;
+			minionModule.GotHit += minionModule.PlayOnHitParticlEffect;
+		}
+		return minionModule;
+	}
+}
+
+public class MinionOnHitEventArgs : EventArgs
+{
+	public int MinionValue;
+	public MinionModule MinionModule;
+	public MinionOnHitEventArgs(int minionValue, MinionModule minionModule)
+	{
+		MinionValue = minionValue;
+		MinionModule = minionModule;
+	}
+}
+/// <summary>
+/// Functionalities: Calls on hit feedback when collided with a bullet. Also sends an event when this happens. 
+/// </summary>
 public class MinionModule : ICollideAble, IEventPublisher
 { 
 	#region Variables

@@ -22,11 +22,11 @@ public class Bullet : MonoBehaviour
 		bouncesLeft -=1;
 		if(collision.gameObject.tag == "Minion")
 		{
-			//Destroy(gameObject.transform.parent.gameObject);
+			Destroy(gameObject.transform.parent.gameObject);
 		}
 		if(bouncesLeft <= 0)
 		{
-			//Destroy(gameObject.transform.parent.gameObject);
+			Destroy(gameObject.transform.parent.gameObject);
 		}
 	}
 	#endregion

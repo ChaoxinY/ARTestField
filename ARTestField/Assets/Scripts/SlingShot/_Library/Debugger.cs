@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public static class Debugger
 {
@@ -7,7 +6,6 @@ public static class Debugger
 	{
 		Debug.Log($"Caller: {caller} Debug Content: {debugContent}");
 	}
-
 }
 
 
