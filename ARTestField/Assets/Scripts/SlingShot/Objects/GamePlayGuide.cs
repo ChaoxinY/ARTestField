@@ -14,7 +14,7 @@ public class GamePlayGuide : MonoBehaviour, IEventHandler
 	#region Initialization
 	private void Awake()
 	{
-		StaticRefrences.EventSubject.PublisherSubscribed += SubscribeEvent;
+		StaticReferences.EventSubject.PublisherSubscribed += SubscribeEvent;
 		scoreDisplay.SetActive(false);
 	}
 	#endregion
@@ -37,8 +37,8 @@ public class GamePlayGuide : MonoBehaviour, IEventHandler
 
 	public void UnSubScribeEvent()
 	{
-		StaticRefrences.EventSubject.PublisherSubscribed -= SubscribeEvent;
-		foreach(IEventPublisher eventPublisher in StaticRefrences.EventSubject.EventPublishers)
+		StaticReferences.EventSubject.PublisherSubscribed -= SubscribeEvent;
+		foreach(IEventPublisher eventPublisher in StaticReferences.EventSubject.EventPublishers)
 		{
 			if(eventPublisher.GetType() == typeof(SlingShot.InputHandler))
 			{

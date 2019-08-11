@@ -50,16 +50,16 @@ public class Test : MonoBehaviour
 	public void FireTest()
 	{
 		GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
-		bullet.GetComponentInChildren<Rigidbody>().AddForce(transform.forward*StaticRefrences.slingShotMaximumLaunchForce*forcePercentage, ForceMode.Impulse);
+		bullet.GetComponentInChildren<Rigidbody>().AddForce(transform.forward*StaticReferences.slingShotMaximumLaunchForce*forcePercentage, ForceMode.Impulse);
 	}
 	public void SpawnTrajectory()
 	{
 		BallisticTrajectoryInfo ballisticTrajectoryInfo = new BallisticTrajectoryInfo
 		{
-			gravity = StaticRefrences.Gravity,
+			gravity = StaticReferences.Gravity,
 			//Initial velocity is wrong !!
-			initialVelocity = 5*forcePercentage/StaticRefrences.bulletMass,
-			launchAngle = Mathf.Abs(StaticRefrences.slingShotLaunchAngle)
+			initialVelocity = 5*forcePercentage/StaticReferences.bulletMass,
+			launchAngle = Mathf.Abs(StaticReferences.slingShotLaunchAngle)
 		};
 		Vector2[] positions = RigidBodyToolMethods.CalculateBallisticTrajectory(ballisticTrajectoryInfo, 100, 0.1f);
 		for(int i = 0; i < positions.Length; i++)

@@ -33,13 +33,13 @@ public class WaveSpawner : MonoBehaviour, IEventHandler
 	#region Initialization
 	private void Awake()
 	{
-		StaticRefrences.EventSubject.PublisherSubscribed += SubscribeEvent;
+		StaticReferences.EventSubject.PublisherSubscribed += SubscribeEvent;
 		waveQueue = new Queue<Wave>(waves);
 	}
 
 	private void Start()
 	{
-		pathMap = StaticRefrences.currentPathMap;
+		pathMap = StaticReferences.currentPathMap;
 	}	
 	#endregion
 
@@ -61,8 +61,8 @@ public class WaveSpawner : MonoBehaviour, IEventHandler
 
 	public void UnSubScribeEvent()
 	{
-		StaticRefrences.EventSubject.PublisherSubscribed -= SubscribeEvent;
-		foreach(IEventPublisher eventPublisher in StaticRefrences.EventSubject.EventPublishers)
+		StaticReferences.EventSubject.PublisherSubscribed -= SubscribeEvent;
+		foreach(IEventPublisher eventPublisher in StaticReferences.EventSubject.EventPublishers)
 		{
 			if(eventPublisher.GetType()== typeof(LevelInitializer))
 			{
@@ -137,7 +137,7 @@ public class WaveSpawner : MonoBehaviour, IEventHandler
 
 	private void InitializeMinion()
 	{
-		int randomMinionTypeValue = StaticRefrences.SystemToolMethods.GenerateRandomIEnumerablePosition(availableMinionTypes);
+		int randomMinionTypeValue = StaticReferences.SystemToolMethods.GenerateRandomIEnumerablePosition(availableMinionTypes);
 		GameObject minion = availableMinionTypes[randomMinionTypeValue];
 		MinionPreset minionPreset = minion.GetComponent<Minion>().minionPreset;
 		
@@ -150,8 +150,8 @@ public class WaveSpawner : MonoBehaviour, IEventHandler
 		//Debug.Log($"CurrentWave {currentWaveValue} MinionValue {(int)minionPreset.rank}");
 		currentWaveValue -= (int)minionPreset.rank;
 		
-		int randomNodeSectionValue = StaticRefrences.SystemToolMethods.GenerateRandomIEnumerablePosition(pathMap.INodeSections);
-		int randomPathNodeValue = StaticRefrences.SystemToolMethods.GenerateRandomIEnumerablePosition(pathMap.INodeSections[randomNodeSectionValue].PathNodes);
+		int randomNodeSectionValue = StaticReferences.SystemToolMethods.GenerateRandomIEnumerablePosition(pathMap.INodeSections);
+		int randomPathNodeValue = StaticReferences.SystemToolMethods.GenerateRandomIEnumerablePosition(pathMap.INodeSections[randomNodeSectionValue].PathNodes);
 		Vector3 randomNodePosition = pathMap.INodeSections[randomNodeSectionValue].PathNodes[randomPathNodeValue].NodePosition;
 		GameObject spawnedMinion = Instantiate(minion, randomNodePosition, Quaternion.identity, levelParent);// minion.transform.position = randomNodePosition;
 		spawnedMinions.Add(spawnedMinion);

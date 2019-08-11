@@ -24,7 +24,7 @@ public static class PathingModuleFactory
 
 		try
 		{
-			pathingModule.nodeSection = StaticRefrences.currentPathMap.INodeSections.Where(nodeSection => nodeSection.SectionName == pathingInformation.nodeSectionName).First();
+			pathingModule.nodeSection = StaticReferences.currentPathMap.INodeSections.Where(nodeSection => nodeSection.SectionName == pathingInformation.nodeSectionName).First();
 		}
 		catch(NullReferenceException e)
 		{
@@ -100,7 +100,7 @@ public class PathingModule : IFixedUpdater
 		currentPath.Clear();
 		PathNode startNode = nodeSection.PathNodes.Where(node => node.NodePosition == nextPosition).ToList().First();
 		List<PathNode> uniqueNodeList = nodeSection.PathNodes.Where(node => node.NodePosition != nextPosition).ToList();
-		int randomListValue = StaticRefrences.SystemToolMethods.GenerateRandomIEnumerablePosition(uniqueNodeList);
+		int randomListValue = StaticReferences.SystemToolMethods.GenerateRandomIEnumerablePosition(uniqueNodeList);
 		PathNode endNode = uniqueNodeList[randomListValue];
 		PathfindingCalculationParameters pathfindingCalculationParameters = new PathfindingCalculationParameters
 		{

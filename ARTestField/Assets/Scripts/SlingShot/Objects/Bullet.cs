@@ -11,7 +11,7 @@ public class Bullet : MonoBehaviour
 
 	private void Awake()
 	{
-		bulletRigidBody.mass = StaticRefrences.bulletMass;
+		bulletRigidBody.mass = StaticReferences.bulletMass;
 	}
 
 	#endregion

@@ -19,50 +19,50 @@ public class DebugWidow : MonoBehaviour
 	#region Functionality
 	public void ChangeBulletMass()
 	{
-		StaticRefrences.bulletMass = UtilityLibrary.GetFloatValueFromInputField(bulletMassInputField);
+		StaticReferences.bulletMass = UtilityLibrary.GetFloatValueFromInputField(bulletMassInputField);
 	}
 
 	public void ChangeSlingShotLaunchForce()
 	{
-		StaticRefrences.slingShotMaximumLaunchForce = UtilityLibrary.GetFloatValueFromInputField(slingShotLaunchForceInputField);
+		StaticReferences.slingShotMaximumLaunchForce = UtilityLibrary.GetFloatValueFromInputField(slingShotLaunchForceInputField);
 	}
 
 	public void ChangeSlingShotAngleCounterWeight()
 	{
-		StaticRefrences.slingShotAngleCounterWeight = UtilityLibrary.GetFloatValueFromInputField(slingShotAngleCounterWeightInputField);
+		StaticReferences.slingShotAngleCounterWeight = UtilityLibrary.GetFloatValueFromInputField(slingShotAngleCounterWeightInputField);
 	}
 
 	public void ChangeSlingShotAngle()
 	{
-		StaticRefrences.slingShotLaunchAngle = -Mathf.Abs(UtilityLibrary.GetFloatValueFromInputField(slingShotLaunchAngleInputField));
+		StaticReferences.slingShotLaunchAngle = -Mathf.Abs(UtilityLibrary.GetFloatValueFromInputField(slingShotLaunchAngleInputField));
 	}
 
 	public void ChangeSlingShotOriginXValue()
 	{
-		StaticRefrences.slingShotOriginPoint.x = UtilityLibrary.GetFloatValueFromInputField(slingShotOriginXInputField);
+		StaticReferences.slingShotOriginPoint.x = UtilityLibrary.GetFloatValueFromInputField(slingShotOriginXInputField);
 		UpdateslingShotOriginPoint();
 	}
 
 	public void ChangeSlingShotOriginYValue()
 	{
-		StaticRefrences.slingShotOriginPoint.y = UtilityLibrary.GetFloatValueFromInputField(slingShotOriginYInputField);
+		StaticReferences.slingShotOriginPoint.y = UtilityLibrary.GetFloatValueFromInputField(slingShotOriginYInputField);
 		UpdateslingShotOriginPoint();
 	}
 
 	public void ChangeSlingShotOriginZValue()
 	{
-		StaticRefrences.slingShotOriginPoint.z  = UtilityLibrary.GetFloatValueFromInputField(slingShotOriginZInputField);
+		StaticReferences.slingShotOriginPoint.z  = UtilityLibrary.GetFloatValueFromInputField(slingShotOriginZInputField);
 		UpdateslingShotOriginPoint();
 	}
 
 	public void ChangeTrajectoryIntervals()
 	{
-		StaticRefrences.predictionIntervals = UtilityLibrary.GetFloatValueFromInputField(trajectoryInterval);
+		StaticReferences.predictionIntervals = UtilityLibrary.GetFloatValueFromInputField(trajectoryInterval);
 	}
 
 	private void UpdateslingShotOriginPoint()
 	{
-		slingShotOriginPoint.transform.localPosition = StaticRefrences.slingShotOriginPoint;
+		slingShotOriginPoint.transform.localPosition = StaticReferences.slingShotOriginPoint;
 	}
 	#endregion
 }

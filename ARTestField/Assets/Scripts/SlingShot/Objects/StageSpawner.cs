@@ -22,13 +22,13 @@ public class StageSpawner : MonoBehaviour, IEventHandler, IEventPublisher
 	#region Initialization
 	private void Awake()
 	{
-		StaticRefrences.EventSubject.PublisherSubscribed += SubscribeEvent;
+		StaticReferences.EventSubject.PublisherSubscribed += SubscribeEvent;
 		stagePrefabToSpawn = availableStages[0];
-		Debug.Log(StaticRefrences.EventSubject);
+		Debug.Log(StaticReferences.EventSubject);
 	}
 	private void Start()
 	{
-		StaticRefrences.EventSubject.Subscribe(this);
+		StaticReferences.EventSubject.Subscribe(this);
 	}
 	#endregion
 
@@ -42,7 +42,7 @@ public class StageSpawner : MonoBehaviour, IEventHandler, IEventPublisher
 
 	public void UnSubscribeFromSubject()
 	{
-		StaticRefrences.EventSubject.UnSubscribe(this);
+		StaticReferences.EventSubject.UnSubscribe(this);
 	}
 
 	public void SetCurrentStage()
@@ -63,8 +63,8 @@ public class StageSpawner : MonoBehaviour, IEventHandler, IEventPublisher
 
 	public void UnSubScribeEvent()
 	{
-		StaticRefrences.EventSubject.PublisherSubscribed -= SubscribeEvent;
-		foreach(IEventPublisher eventPublisher in StaticRefrences.EventSubject.EventPublishers)
+		StaticReferences.EventSubject.PublisherSubscribed -= SubscribeEvent;
+		foreach(IEventPublisher eventPublisher in StaticReferences.EventSubject.EventPublishers)
 		{
 			if(eventPublisher.GetType()== typeof(SlingShot.InputHandler))
 			{

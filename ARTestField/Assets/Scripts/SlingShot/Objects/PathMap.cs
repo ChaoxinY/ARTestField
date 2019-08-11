@@ -12,7 +12,7 @@ public class PathMap : MonoBehaviour
 	#region Initialization
 	private void Awake()
 	{
-		StaticRefrences.currentPathMap = this;
+		StaticReferences.currentPathMap = this;
 		foreach(NodeSection nodeSection in nodeSections)
 		{
 			INodeSections.Add(nodeSection);

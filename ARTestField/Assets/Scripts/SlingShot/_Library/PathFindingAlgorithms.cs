@@ -84,7 +84,7 @@ public static class PathFindingAlgorithms
 			}
 
 			priorityQueue = priorityQueue.OrderBy(node => node.PathWeight).ToList();
-			await Task.Delay(StaticRefrences.FixedTimeInMiliseconds);
+			await Task.Delay(StaticReferences.FixedTimeInMiliseconds);
 		}
 	
 		//Keep adding the pathnode to the path untill we hit the start pathnode
@@ -93,7 +93,7 @@ public static class PathFindingAlgorithms
 		{
 			path.Add(pathNodeToAdd.pathNode.NodePosition);
 			pathNodeToAdd = pathNodeToAdd.previousNode;
-			await Task.Delay(StaticRefrences.FixedTimeInMiliseconds);
+			await Task.Delay(StaticReferences.FixedTimeInMiliseconds);
 		}
 		path.Reverse();
 		return path;

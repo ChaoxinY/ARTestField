@@ -11,12 +11,12 @@ public class UIToolMethods : MonoBehaviour
 	#region Functionality
 	public void LoadScene(string sceneName)
 	{
-		StartCoroutine(StaticRefrences.CoroutineToolMethods.AsyncLoadScene(sceneName));
+		StartCoroutine(StaticReferences.CoroutineToolMethods.AsyncLoadScene(sceneName));
 	}
 
 	public void ExitGame()
 	{
-		StaticRefrences.UIToolMethods.ExitGame();
+		StaticReferences.UIToolMethods.ExitGame();
 	}
 	#endregion
 }

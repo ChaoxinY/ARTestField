@@ -18,7 +18,7 @@ public class LevelInitializer : MonoBehaviour, IEventPublisher
 	#region Initialization
 	private void Start()
 	{
-		StaticRefrences.EventSubject.Subscribe(this);
+		StaticReferences.EventSubject.Subscribe(this);
 	}
 	#endregion
 
@@ -43,7 +43,7 @@ public class LevelInitializer : MonoBehaviour, IEventPublisher
 
 	public void UnSubscribeFromSubject()
 	{
-		StaticRefrences.EventSubject.UnSubscribe(this);
+		StaticReferences.EventSubject.UnSubscribe(this);
 	}
 
 	private IEnumerator LevelCountDown()

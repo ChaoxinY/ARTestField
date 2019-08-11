@@ -13,7 +13,7 @@ namespace SlingShot
         void Start()
         {
             QuitOnConnectionErrors();
-            StaticRefrences.EventSubject.Subscribe(this as IEventPublisher);
+            StaticReferences.EventSubject.Subscribe(this as IEventPublisher);
         }
 
         void Update()
@@ -64,7 +64,7 @@ namespace SlingShot
 
 		public void UnSubscribeFromSubject()
         {
-            StaticRefrences.EventSubject.UnSubscribe(this);
+            StaticReferences.EventSubject.UnSubscribe(this);
         }
 
 		private void QuitOnConnectionErrors()

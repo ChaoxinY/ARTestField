@@ -14,7 +14,7 @@ public class BulletSpawner : MonoBehaviour, IEventHandler
 	#region Initialization
 	private void Awake()
 	{
-		StaticRefrences.EventSubject.PublisherSubscribed += SubscribeEvent;
+		StaticReferences.EventSubject.PublisherSubscribed += SubscribeEvent;
 	}
     #endregion
 
@@ -30,8 +30,8 @@ public class BulletSpawner : MonoBehaviour, IEventHandler
 
 	public void UnSubScribeEvent()
 	{
-		StaticRefrences.EventSubject.PublisherSubscribed -= SubscribeEvent;
-		foreach(IEventPublisher eventPublisher in StaticRefrences.EventSubject.EventPublishers)
+		StaticReferences.EventSubject.PublisherSubscribed -= SubscribeEvent;
+		foreach(IEventPublisher eventPublisher in StaticReferences.EventSubject.EventPublishers)
 		{
 			if(eventPublisher.GetType()== typeof(SlingShot.InputHandler))
 			{
@@ -50,12 +50,12 @@ public class BulletSpawner : MonoBehaviour, IEventHandler
     {
         touch = userTouchEventArgs.Touch;
 
-        if (touch.position.y <StaticRefrences.MinimumScreenVerticalPoint)
+        if (touch.position.y <StaticReferences.MinimumScreenVerticalPoint)
         {
 			if(touch.phase == TouchPhase.Ended)
 			{
 				//Debugger.DebugObject(this, $"{RigidBodyToolMethods.CalculateSlingShotLaunchForce(transform.forward, touch.position)}");
-				transform.Rotate(new Vector3(1, 0, 0),StaticRefrences.slingShotLaunchAngle);
+				transform.Rotate(new Vector3(1, 0, 0),StaticReferences.slingShotLaunchAngle);
 				FireSlingShot(RigidBodyToolMethods.CalculateSlingShotLaunchForce(transform.forward,touch.position));
 			}         
         }

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityAD;
 
-public static class StaticRefrences
+public static class StaticReferences
 {
 	public static EventSubject EventSubject = new EventSubject();
 	public static CoroutineToolMethods CoroutineToolMethods = new CoroutineToolMethods();

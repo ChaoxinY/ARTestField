@@ -17,14 +17,14 @@ public class BulletTrajectoryUpdater : MonoBehaviour, IEventHandler
 	#region Initialization
 	private void Awake()
 	{
-		StaticRefrences.EventSubject.PublisherSubscribed += SubscribeEvent;
+		StaticReferences.EventSubject.PublisherSubscribed += SubscribeEvent;
 	}
 
 	private void Start()
 	{
-		bulletOrigin.transform.position = StaticRefrences.slingShotOriginPoint;
+		bulletOrigin.transform.position = StaticReferences.slingShotOriginPoint;
 		originRotation = bulletOrigin.transform.localRotation;
-		for(int i = 0; i < StaticRefrences.TotalTrajectoryPredictions; i++)
+		for(int i = 0; i < StaticReferences.TotalTrajectoryPredictions; i++)
 		{
 			GameObject trajectoryDot = GameObject.Instantiate(trajectoryPrefab, bulletOrigin.transform, false);
 			trajectoryDots.Add(trajectoryDot);
@@ -45,8 +45,8 @@ public class BulletTrajectoryUpdater : MonoBehaviour, IEventHandler
 
 	public void UnSubScribeEvent()
 	{
-		StaticRefrences.EventSubject.PublisherSubscribed -= SubscribeEvent;
-		foreach(IEventPublisher eventPublisher in StaticRefrences.EventSubject.EventPublishers)
+		StaticReferences.EventSubject.PublisherSubscribed -= SubscribeEvent;
+		foreach(IEventPublisher eventPublisher in StaticReferences.EventSubject.EventPublishers)
 		{
 			if(eventPublisher.GetType()== typeof(SlingShot.InputHandler))
 			{
@@ -65,16 +65,16 @@ public class BulletTrajectoryUpdater : MonoBehaviour, IEventHandler
 		Debugger.DebugObject(this, $"Called to spawn {trajectoryPrefab}");
 		touch = userTouchEventArgs.Touch;
 		//Debugger.DebugObject(this, $"Touch position{touch.position}, called MinimumPoint{StaticRefrences.MinimumVerticalPoint}");
-		if(touch.position.y < StaticRefrences.MinimumScreenVerticalPoint && touch.phase != TouchPhase.Ended)
+		if(touch.position.y < StaticReferences.MinimumScreenVerticalPoint && touch.phase != TouchPhase.Ended)
 		{
 			bulletOrigin.transform.localRotation = originRotation;
 			UpdateSlingShotRotation();
 			float lauchForce = RigidBodyToolMethods.CalculateInputLaunchForce(touch.position);
 			ballisticTrajectoryInfo = new BallisticTrajectoryInfo
 			{
-				gravity = StaticRefrences.Gravity,
-				initialVelocity = lauchForce/StaticRefrences.bulletMass,
-				launchAngle = Mathf.Abs(StaticRefrences.slingShotLaunchAngle)
+				gravity = StaticReferences.Gravity,
+				initialVelocity = lauchForce/StaticReferences.bulletMass,
+				launchAngle = Mathf.Abs(StaticReferences.slingShotLaunchAngle)
 			};
 			//Debugger.DebugObject(this, $"LaunchForce:{lauchForce}");
 			if(!trajectoryDots[0].activeInHierarchy)
@@ -83,7 +83,7 @@ public class BulletTrajectoryUpdater : MonoBehaviour, IEventHandler
 			}
 			UpdateTrajectory();
 		}
-		else if (touch.position.y < StaticRefrences.MinimumScreenVerticalPoint && touch.phase == TouchPhase.Ended)
+		else if (touch.position.y < StaticReferences.MinimumScreenVerticalPoint && touch.phase == TouchPhase.Ended)
 		{
 			EnableTrajectory(false);
 		}
@@ -99,7 +99,7 @@ public class BulletTrajectoryUpdater : MonoBehaviour, IEventHandler
 
 	private void UpdateTrajectory()
 	{
-		Vector2[] positions = RigidBodyToolMethods.CalculateBallisticTrajectory(ballisticTrajectoryInfo, StaticRefrences.TotalTrajectoryPredictions, StaticRefrences.predictionIntervals);
+		Vector2[] positions = RigidBodyToolMethods.CalculateBallisticTrajectory(ballisticTrajectoryInfo, StaticReferences.TotalTrajectoryPredictions, StaticReferences.predictionIntervals);
 		for(int i = 0; i < positions.Length; i++)
 		{
 			trajectoryDots[i].transform.localPosition =  new Vector3(0, positions[i].y, positions[i].x);
@@ -109,7 +109,7 @@ public class BulletTrajectoryUpdater : MonoBehaviour, IEventHandler
 
 	private void UpdateSlingShotRotation()
 	{
-		Vector2 originPoint = StaticRefrences.ScreenCenterPoint;
+		Vector2 originPoint = StaticReferences.ScreenCenterPoint;
 
 		float adjescentLength = Math.Abs(originPoint.y - touch.position.y);
 		float oppositeLength = Math.Abs(originPoint.x - touch.position.x);

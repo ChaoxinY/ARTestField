@@ -13,7 +13,7 @@ public class SlingerSpriteUpdater : MonoBehaviour, IEventHandler
     #region Initialization
 	private void Awake()
 	{
-		StaticRefrences.EventSubject.PublisherSubscribed += SubscribeEvent;
+		StaticReferences.EventSubject.PublisherSubscribed += SubscribeEvent;
 	}
 	#endregion
 
@@ -29,8 +29,8 @@ public class SlingerSpriteUpdater : MonoBehaviour, IEventHandler
 
 	public void UnSubScribeEvent()
 	{
-		StaticRefrences.EventSubject.PublisherSubscribed -= SubscribeEvent;
-		foreach(IEventPublisher eventPublisher in StaticRefrences.EventSubject.EventPublishers)
+		StaticReferences.EventSubject.PublisherSubscribed -= SubscribeEvent;
+		foreach(IEventPublisher eventPublisher in StaticReferences.EventSubject.EventPublishers)
 		{
 			if(eventPublisher.GetType()== typeof(SlingShot.InputHandler))
 			{
@@ -49,7 +49,7 @@ public class SlingerSpriteUpdater : MonoBehaviour, IEventHandler
     {      
         touch = userTouchEventArgs.Touch;
 		//Debugger.DebugObject(this, $"Touch position{touch.position}, called MinimumPoint{StaticRefrences.MinimumVerticalPoint}");
-		if(touch.position.y < StaticRefrences.MinimumScreenVerticalPoint)
+		if(touch.position.y < StaticReferences.MinimumScreenVerticalPoint)
 		{
 				UpdateSlingerSpritePosition();
         }
@@ -59,7 +59,7 @@ public class SlingerSpriteUpdater : MonoBehaviour, IEventHandler
     {
 		if(touch.phase == TouchPhase.Ended)
 		{
-			slingerSpriteTransform.position = StaticRefrences.ScreenCenterPoint;
+			slingerSpriteTransform.position = StaticReferences.ScreenCenterPoint;
 		}
 		else
 		{

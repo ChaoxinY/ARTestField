@@ -55,7 +55,7 @@ public class MinionModule : ICollideAble, IEventPublisher
 	public MinionModule()
 	{
 		//Debug.Log(StaticRefrences.EventSubject.PublisherSubscribed);	
-		StaticRefrences.EventSubject.Subscribe(this);
+		StaticReferences.EventSubject.Subscribe(this);
 	}
 	#endregion
 
@@ -84,7 +84,7 @@ public class MinionModule : ICollideAble, IEventPublisher
 
 	public void UnSubscribeFromSubject()
 	{
-		StaticRefrences.EventSubject.UnSubscribe(this);
+		StaticReferences.EventSubject.UnSubscribe(this);
 	}
 	#endregion
 }

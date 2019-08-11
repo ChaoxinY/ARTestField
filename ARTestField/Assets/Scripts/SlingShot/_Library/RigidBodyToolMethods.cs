@@ -29,7 +29,7 @@ public class RigidBodyToolMethods
 
 	public static float CalculateInputLaunchForce(Vector3 touchPosition)
 	{
-		float launchForce = StaticRefrences.slingShotMaximumLaunchForce * Mathf.Clamp(Vector2.Distance(StaticRefrences.ScreenCenterPoint, touchPosition) / (Screen.width * 0.3f), 0, 1f);
+		float launchForce = StaticReferences.slingShotMaximumLaunchForce * Mathf.Clamp(Vector2.Distance(StaticReferences.ScreenCenterPoint, touchPosition) / (Screen.width * 0.3f), 0, 1f);
 		return launchForce;
 	}
 }
