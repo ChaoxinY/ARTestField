@@ -22,14 +22,8 @@ public static class PathingModuleFactory
 				break;
 		}
 
-		try
-		{
-			pathingModule.nodeSection = StaticReferences.currentPathMap.INodeSections.Where(nodeSection => nodeSection.SectionName == pathingInformation.nodeSectionName).First();
-		}
-		catch(NullReferenceException e)
-		{
-			Debug.Log("No pathing node section found");
-		}
+
+		pathingModule.nodeSection = StaticReferences.currentPathMap.INodeSections.Where(nodeSection => nodeSection.SectionName == pathingInformation.nodeSectionName).ToList()[0];
 		pathingModule.movementSpeedMultiplier = pathingInformation.speedMultiplier;
 		return pathingModule;
 	}

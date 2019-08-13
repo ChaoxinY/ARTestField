@@ -6,8 +6,10 @@ using System.Collections.Generic;
 public class BulletTrajectoryUpdater : MonoBehaviour, IEventHandler
 { 
 	#region Variables
-	public GameObject bulletOrigin;
-	public GameObject trajectoryPrefab;
+	[SerializeField]
+	private readonly GameObject bulletOrigin;
+	[SerializeField]
+	private readonly GameObject trajectoryPrefab;
 	private BallisticTrajectoryInfo ballisticTrajectoryInfo;
 	private Touch touch;
 	private Quaternion originRotation;

@@ -6,7 +6,8 @@ using UnityAD;
 public class ScoreUpdater : MonoBehaviour, IEventHandler
 {
 	#region Variables
-	public Text scoreText;
+	[SerializeField]
+	private readonly Text scoreText;
 	private int score;
 	#endregion
 

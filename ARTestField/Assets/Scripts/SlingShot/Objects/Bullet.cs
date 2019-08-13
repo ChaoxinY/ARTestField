@@ -3,7 +3,8 @@
 public class Bullet : MonoBehaviour
 {
 	#region Variables
-	public Rigidbody bulletRigidBody;
+	[SerializeField]
+	private Rigidbody bulletRigidBody;
 	private int bouncesLeft = 2;
 	#endregion
 

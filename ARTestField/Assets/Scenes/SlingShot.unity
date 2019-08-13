@@ -207,9 +207,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4959e1bc2e1837f4e8f32d6bee1da175, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletOrigin: {fileID: 1350817048}
-  trajectoryPrefab: {fileID: 7983225314143498777, guid: 2267b828b318fdd46a1d29f6b758b2d6,
-    type: 3}
 --- !u!4 &186871433
 Transform:
   m_ObjectHideFlags: 0
@@ -298,12 +295,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9ed8049474c86844f971edb25aa63db9, type: 3}
---- !u!224 &942694981 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 8381407379019003311, guid: 2d3594549207c1c4f965a6f3411989b8,
-    type: 3}
-  m_PrefabInstance: {fileID: 8381407379693213674}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1044949590
 GameObject:
   m_ObjectHideFlags: 0
@@ -333,12 +324,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc59b25bb74df354192a950e585c70f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  availableStages:
-  - {fileID: 8817384026515604612, guid: 309cbfbf447a5a747bbe2ae0435cb643, type: 3}
-  - {fileID: 1884775660330330873, guid: 5f9e5fa90c260e64e8b6ea6724bc393c, type: 3}
-  - {fileID: 7450891598543787263, guid: 5947d064e37a68f48b3e6412db4400e8, type: 3}
-  debugText: {fileID: 0}
-  stageInputfield: {fileID: 8381407379693213677}
 --- !u!4 &1044949592
 Transform:
   m_ObjectHideFlags: 0
@@ -402,7 +387,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7862cd1446c158f46926ff38b1b3a4b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slingerSpriteTransform: {fileID: 942694981}
 --- !u!1 &1350817048
 GameObject:
   m_ObjectHideFlags: 0
@@ -434,9 +418,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f0d3099e4ba7684996c7d62e72929ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 6096249215105895821, guid: c6c751ec7123bb944968965e2e381ace,
-    type: 3}
-  debugText: {fileID: 0}
 --- !u!4 &1350817050
 Transform:
   m_ObjectHideFlags: 0
@@ -445,7 +426,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1350817048}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.225, z: 0}
+  m_LocalPosition: {x: 0, y: -0.138, z: -0.13}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1086288351}
@@ -1213,6 +1194,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -2007
       objectReference: {fileID: 0}
+    - target: {fileID: 4671006096992220302, guid: 16fc87e05b0e5ee49b2841e6ed03b58c,
+        type: 3}
+      propertyPath: slingShotOriginPoint
+      value: 
+      objectReference: {fileID: 1350817048}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 16fc87e05b0e5ee49b2841e6ed03b58c, type: 3}
 --- !u!224 &3304412504624479003 stripped
@@ -1440,15 +1426,3 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 8381407379693213674}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8381407379693213677 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1897462432460763926, guid: 2d3594549207c1c4f965a6f3411989b8,
-    type: 3}
-  m_PrefabInstance: {fileID: 8381407379693213674}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 575553740, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

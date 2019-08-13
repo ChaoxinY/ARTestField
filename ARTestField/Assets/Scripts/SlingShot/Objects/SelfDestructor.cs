@@ -4,7 +4,8 @@ using UnityEngine;
 public class SelfDestructor : MonoBehaviour
 {
 	#region Variables
-	public float lifeTime;
+	[SerializeField]
+	private readonly float lifeTime;
 	#endregion
 
 	#region Initialization

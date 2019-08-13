@@ -5,7 +5,7 @@ public class PathMap : MonoBehaviour
 {
 	#region Variables
 	[SerializeField]
-	private List<NodeSection> nodeSections;
+	private readonly List<NodeSection> nodeSections;
 	public List<INodeSection> INodeSections = new List<INodeSection>();
 	#endregion
 

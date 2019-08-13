@@ -5,8 +5,10 @@ using UnityEngine.Events;
 public class OnDeathTrigger :MonoBehaviour
 {
 	#region Variables
-	public GameObject eventSender;
-	public UnityEvent onDeathEvent;
+	[SerializeField]
+	private readonly GameObject eventSender;
+	[SerializeField]
+	private readonly UnityEvent onDeathEvent;
 	#endregion
 
 	#region Initialization

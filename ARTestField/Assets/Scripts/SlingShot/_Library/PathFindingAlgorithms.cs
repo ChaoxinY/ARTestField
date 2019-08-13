@@ -44,7 +44,7 @@ public class AStarPathNode
 
 public static class PathFindingAlgorithms
 {
-	//Coroutine calcualtion
+	//Async calcualtion to prevent freezing the main thread.
 	public async static Task<List<Vector3>> CalculateAStarPath(PathfindingCalculationParameters pathfindingCalculationParameters)
 	{
 		PathNode startNode = pathfindingCalculationParameters.StartNode;
@@ -56,13 +56,13 @@ public static class PathFindingAlgorithms
 
 		priorityQueue.Add(new AStarPathNode { pathNode = startNode, endGoal = endNode });
 
-		//If the endnode is still not reached 
+		//If the endnode is not reached 
 		while(priorityQueue.Count != 0 && !travelledNodes.Select(node => node.pathNode).Contains(endNode))
 		{
 			AStarPathNode currentPathNode = priorityQueue[0];
 			priorityQueue.Remove(currentPathNode);
 			travelledNodes.Add(currentPathNode);
-			foreach(PathNode adjacentNode in currentPathNode.pathNode.connectedNodes)
+			foreach(PathNode adjacentNode in currentPathNode.pathNode.ConnectedNodes)
 			{
 				AStarPathNode adjacentAstarNode = new AStarPathNode
 				{

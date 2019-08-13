@@ -8,11 +8,14 @@ using UnityAD;
 public class LevelInitializer : MonoBehaviour, IEventPublisher
 {
 	#region Variables
-	public float levelLength;
 	public event EventHandler LevelStarted;
 	public event EventHandler LevelEnded;
-	public List<GameObject> startingDummies;
-	public Text countDownText;
+	[SerializeField]
+	private readonly List<GameObject> startingDummies;
+	[SerializeField]
+	private readonly Text countDownText;
+	[SerializeField]
+	private readonly float levelLength;
 	#endregion
 
 	#region Initialization

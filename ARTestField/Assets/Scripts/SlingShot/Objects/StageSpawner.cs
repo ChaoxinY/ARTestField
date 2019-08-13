@@ -8,14 +8,17 @@ using System.Collections.Generic;
 public class StageSpawner : MonoBehaviour, IEventHandler, IEventPublisher
 {
 	#region Variables
-	public List<GameObject> availableStages;
-  
-    public Text debugText;
-	public InputField stageInputfield;
 	public event EventHandler StageDeleted;
-	private bool stageSpawned;
-    private GameObject stage;
+
+	[SerializeField]
+	private readonly List<GameObject> availableStages;
+	[SerializeField]
+	private readonly Text debugText;
+	[SerializeField]
+	private readonly InputField stageInputfield;	
+	private bool stageSpawned; 
 	private TrackableHit trackableHit;
+	private GameObject stage;
 	private GameObject stagePrefabToSpawn;
 	#endregion
 	
@@ -24,7 +27,6 @@ public class StageSpawner : MonoBehaviour, IEventHandler, IEventPublisher
 	{
 		StaticReferences.EventSubject.PublisherSubscribed += SubscribeEvent;
 		stagePrefabToSpawn = availableStages[0];
-		Debug.Log(StaticReferences.EventSubject);
 	}
 	private void Start()
 	{
@@ -47,7 +49,6 @@ public class StageSpawner : MonoBehaviour, IEventHandler, IEventPublisher
 
 	public void SetCurrentStage()
 	{
-
 		stagePrefabToSpawn = availableStages[Mathf.Clamp(UtilityLibrary.GetIntValueFromInputField(stageInputfield),0,availableStages.Count-1)];
 		Debug.Log($"currentStage {stagePrefabToSpawn}");
 	}
@@ -93,7 +94,6 @@ public class StageSpawner : MonoBehaviour, IEventHandler, IEventPublisher
     {
         stage = Instantiate(stagePrefabToSpawn, trackableHit.Pose.position + Vector3.up *0.8f, Quaternion.identity);
         var anchor = trackableHit.Trackable.CreateAnchor(trackableHit.Pose);
-        // Make Andy model a child of the anchor.
         //Prevent static gameobject to slip away.
         stage.transform.parent = anchor.transform;
     }

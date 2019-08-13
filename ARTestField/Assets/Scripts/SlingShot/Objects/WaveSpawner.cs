@@ -19,10 +19,13 @@ public struct Wave
 public class WaveSpawner : MonoBehaviour, IEventHandler
 {
 	#region Variables
-	public List<Wave> waves = new List<Wave>();
-	public List<GameObject> availableMinionTypes = new List<GameObject>();
-	public PathMap pathMap;
-	public Transform levelParent;
+	[SerializeField]
+	private readonly List<Wave> waves;
+	[SerializeField]
+	private readonly List<GameObject> availableMinionTypes;
+	[SerializeField]
+	private readonly Transform levelParent;
+	private PathMap pathMap;
 	private Queue<Wave> waveQueue = new Queue<Wave>();
 	private List<GameObject> spawnedMinions = new List<GameObject>();
 	private int currentWaveValue;
@@ -88,7 +91,10 @@ public class WaveSpawner : MonoBehaviour, IEventHandler
 		if(spawnedMinions.Any(minion => GameObject.ReferenceEquals(minion, minionOnHitEventArgs.MinionModule.minion)))
 		{
 			spawnedMinions.Remove(minionOnHitEventArgs.MinionModule.minion);
-			InitializeMinion();
+			if(currentWaveValue >0)
+			{
+				InitializeMinion();
+			}
 		}
 	}
 
@@ -145,16 +151,15 @@ public class WaveSpawner : MonoBehaviour, IEventHandler
 		int predictionValue = currentWaveValue;
 		if((predictionValue -= (int)minionPreset.rank) < 0)
 		{
-			minion = availableMinionTypes.Where(minionType => (int)minionType.GetComponent<Minion>().minionPreset.rank == currentWaveValue).First();
+			minion = availableMinionTypes.Where(minionType => (int)minionType.GetComponent<Minion>().minionPreset.rank == currentWaveValue).ToList()[0];
+			minionPreset = minion.GetComponent<Minion>().minionPreset;
 		}		
 		//Debug.Log($"CurrentWave {currentWaveValue} MinionValue {(int)minionPreset.rank}");
 		currentWaveValue -= (int)minionPreset.rank;
-		
 		int randomNodeSectionValue = StaticReferences.SystemToolMethods.GenerateRandomIEnumerablePosition(pathMap.INodeSections);
 		int randomPathNodeValue = StaticReferences.SystemToolMethods.GenerateRandomIEnumerablePosition(pathMap.INodeSections[randomNodeSectionValue].PathNodes);
 		Vector3 randomNodePosition = pathMap.INodeSections[randomNodeSectionValue].PathNodes[randomPathNodeValue].NodePosition;
-		GameObject spawnedMinion = Instantiate(minion, randomNodePosition, Quaternion.identity, levelParent);// minion.transform.position = randomNodePosition;
-		spawnedMinions.Add(spawnedMinion);
+		
 		if(minion.GetComponent<Mover>())
 		{	
 			Mover mover = minion.GetComponent<Mover>();
@@ -164,7 +169,8 @@ public class WaveSpawner : MonoBehaviour, IEventHandler
 				speedMultiplier = UnityEngine.Random.Range(currentWave.MinionMovementSpeed.minValue, currentWave.MinionMovementSpeed.maxValue)
 			};
 		}
-		//Initialize minion		
+		GameObject spawnedMinion = Instantiate(minion, randomNodePosition, Quaternion.identity, levelParent);
+		spawnedMinions.Add(spawnedMinion);
 	}
 	#endregion
 }

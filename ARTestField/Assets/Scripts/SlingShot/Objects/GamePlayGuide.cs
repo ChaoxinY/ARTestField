@@ -6,9 +6,11 @@ using UnityEngine.UI;
 public class GamePlayGuide : MonoBehaviour, IEventHandler
 {
 	#region Variables
-	public GameObject scoreDisplay;
-	public GameObject guideTextGameObject;
-	private Text guideText;
+	[SerializeField]
+	private readonly GameObject scoreDisplay;
+	[SerializeField]
+	private readonly GameObject guideTextGameObject;
+	private readonly Text guideText;
 	#endregion
 
 	#region Initialization

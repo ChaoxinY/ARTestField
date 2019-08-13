@@ -5,15 +5,24 @@ using UnityEngine.UI;
 public class DebugWidow : MonoBehaviour
 {
 	#region Variables
-	public GameObject slingShotOriginPoint;
-	public InputField bulletMassInputField;
-	public InputField slingShotLaunchForceInputField;
-	public InputField slingShotLaunchAngleInputField;
-	public InputField slingShotAngleCounterWeightInputField;
-	public InputField slingShotOriginXInputField;
-	public InputField slingShotOriginYInputField;
-	public InputField slingShotOriginZInputField;
-	public InputField trajectoryInterval;
+	[SerializeField]
+	private readonly GameObject slingShotOriginPoint;
+	[SerializeField]
+	private readonly InputField bulletMassInputField;
+	[SerializeField]
+	private readonly InputField slingShotLaunchForceInputField;
+	[SerializeField]
+	private readonly InputField slingShotLaunchAngleInputField;
+	[SerializeField]
+	private readonly InputField slingShotAngleCounterWeightInputField;
+	[SerializeField]
+	private readonly InputField slingShotOriginXInputField;
+	[SerializeField]
+	private readonly InputField slingShotOriginYInputField;
+	[SerializeField]
+	private readonly InputField slingShotOriginZInputField;
+	[SerializeField]
+	private readonly InputField trajectoryInterval;
 	#endregion
 
 	#region Functionality

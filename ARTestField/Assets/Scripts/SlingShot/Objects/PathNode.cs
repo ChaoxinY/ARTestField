@@ -5,7 +5,7 @@ using UnityEngine;
 public class PathNode : MonoBehaviour
 {
 	#region Variables
-	public List<PathNode> connectedNodes;
+	public List<PathNode> ConnectedNodes { get; set; }
 	public Vector3 NodePosition { get; private set; }
 	#endregion
 
@@ -20,7 +20,7 @@ public class PathNode : MonoBehaviour
 	void FixedUpdate()
 	{
 		Color color = Color.red;
-		foreach(PathNode item in connectedNodes)
+		foreach(PathNode item in ConnectedNodes)
 		{
 			Debug.DrawLine(NodePosition, item.NodePosition, color);
 		}

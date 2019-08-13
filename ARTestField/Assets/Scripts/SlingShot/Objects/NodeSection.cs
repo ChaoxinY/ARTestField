@@ -19,11 +19,11 @@ public class NodeSection : MonoBehaviour, INodeSection
 	public bool GenerationFinished { get { return generationFinished; } }
 
 	[SerializeField]
-	private List<PathNode> pathNodes;
+	private  List<PathNode> pathNodes;
 	[SerializeField]
-	private int totalNodeConnections;
+	private readonly int totalNodeConnections;
 	[SerializeField]
-	private string sectionName;
+	private readonly string sectionName;
 	private bool generationFinished;
 	#endregion
 
@@ -56,7 +56,7 @@ public class NodeSection : MonoBehaviour, INodeSection
 				//Closest is not the node itself and connected node does not contain the closest
 				if(pathNodes[i] != pathNode)
 				{			
-					pathNode.connectedNodes.Add(pathNodes[i]);
+					pathNode.ConnectedNodes.Add(pathNodes[i]);
 					//pathNodes[i].connectedNodes.Add(pathNode);
 					j++;
 				}			

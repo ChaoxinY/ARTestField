@@ -6,7 +6,8 @@ using UnityAD;
 public class SlingerSpriteUpdater : MonoBehaviour, IEventHandler
 {
     #region Variables
-    public RectTransform slingerSpriteTransform;
+	[SerializeField]
+    private readonly RectTransform slingerSpriteTransform;
     private Touch touch;
     #endregion
 

@@ -6,8 +6,8 @@ using UnityAD;
 public class BulletSpawner : MonoBehaviour, IEventHandler
 {
 	#region Variables
-    public GameObject bulletPrefab;
-    public Text debugText;
+	[SerializeField]
+    private readonly GameObject bulletPrefab;
     private Touch touch;
 	#endregion
 
