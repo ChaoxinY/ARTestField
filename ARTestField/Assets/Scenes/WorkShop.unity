@@ -166,6 +166,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc59b25bb74df354192a950e585c70f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  availableStages: []
+  stageInputfield: {fileID: 0}
 --- !u!4 &62770497 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7983225314143498781, guid: 6643901ab9cb70f478811e1435689527,
@@ -364,6 +366,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4444ad9c0e993174eb99929744c9569c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nodeSections: []
 --- !u!4 &538739829
 Transform:
   m_ObjectHideFlags: 0
@@ -490,6 +493,8 @@ MonoBehaviour:
   - {fileID: 480814572}
   - {fileID: 30547780}
   - {fileID: 163134034}
+  totalNodeConnections: 0
+  sectionName: 
 --- !u!4 &702261432
 Transform:
   m_ObjectHideFlags: 0
@@ -696,6 +701,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f0d3099e4ba7684996c7d62e72929ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bulletPrefab: {fileID: 0}
 --- !u!65 &947504384
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2112,7 +2118,7 @@ PrefabInstance:
     - target: {fileID: 1884775660330330873, guid: 5f9e5fa90c260e64e8b6ea6724bc393c,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 849803750616530601, guid: 5f9e5fa90c260e64e8b6ea6724bc393c,
         type: 3}
@@ -2169,6 +2175,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3057614578689205569, guid: 5f9e5fa90c260e64e8b6ea6724bc393c,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.463
+      objectReference: {fileID: 0}
+    - target: {fileID: 6509039907097599340, guid: 5f9e5fa90c260e64e8b6ea6724bc393c,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.718
+      objectReference: {fileID: 0}
+    - target: {fileID: 6509039907097599340, guid: 5f9e5fa90c260e64e8b6ea6724bc393c,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.233
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5f9e5fa90c260e64e8b6ea6724bc393c, type: 3}
 --- !u!1001 &7450891599313543232
@@ -2182,6 +2203,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Stage3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7450891598543787263, guid: 5947d064e37a68f48b3e6412db4400e8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7450891598543787136, guid: 5947d064e37a68f48b3e6412db4400e8,
         type: 3}
@@ -2238,11 +2264,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8209230394217327236, guid: 5947d064e37a68f48b3e6412db4400e8,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 9147365164444291011, guid: 5947d064e37a68f48b3e6412db4400e8,
         type: 3}
       propertyPath: waves.Array.data[0].minSpawnInterval
@@ -2252,6 +2273,11 @@ PrefabInstance:
         type: 3}
       propertyPath: waves.Array.data[0].maxSpawnInterval
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8209230394217327236, guid: 5947d064e37a68f48b3e6412db4400e8,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5947d064e37a68f48b3e6412db4400e8, type: 3}
