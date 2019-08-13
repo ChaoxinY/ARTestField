@@ -7,7 +7,7 @@ public class ScoreUpdater : MonoBehaviour, IEventHandler
 {
 	#region Variables
 	[SerializeField]
-	private readonly Text scoreText;
+	private Text scoreText;
 	private int score;
 	#endregion
 

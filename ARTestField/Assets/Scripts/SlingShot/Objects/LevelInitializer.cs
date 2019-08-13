@@ -11,11 +11,11 @@ public class LevelInitializer : MonoBehaviour, IEventPublisher
 	public event EventHandler LevelStarted;
 	public event EventHandler LevelEnded;
 	[SerializeField]
-	private readonly List<GameObject> startingDummies;
+	private List<GameObject> startingDummies;
 	[SerializeField]
-	private readonly Text countDownText;
+	private Text countDownText;
 	[SerializeField]
-	private readonly float levelLength;
+	private float levelLength;
 	#endregion
 
 	#region Initialization

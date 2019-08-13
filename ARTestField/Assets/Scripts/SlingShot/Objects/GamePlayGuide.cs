@@ -7,10 +7,10 @@ public class GamePlayGuide : MonoBehaviour, IEventHandler
 {
 	#region Variables
 	[SerializeField]
-	private readonly GameObject scoreDisplay;
+	private GameObject scoreDisplay;
 	[SerializeField]
-	private readonly GameObject guideTextGameObject;
-	private readonly Text guideText;
+	private GameObject guideTextGameObject;
+	private Text guideText;
 	#endregion
 
 	#region Initialization

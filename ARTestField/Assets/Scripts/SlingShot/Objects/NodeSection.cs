@@ -21,9 +21,9 @@ public class NodeSection : MonoBehaviour, INodeSection
 	[SerializeField]
 	private  List<PathNode> pathNodes;
 	[SerializeField]
-	private readonly int totalNodeConnections;
+	private  int totalNodeConnections;
 	[SerializeField]
-	private readonly string sectionName;
+	private  string sectionName;
 	private bool generationFinished;
 	#endregion
 

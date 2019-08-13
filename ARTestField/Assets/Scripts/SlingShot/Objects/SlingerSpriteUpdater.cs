@@ -7,7 +7,7 @@ public class SlingerSpriteUpdater : MonoBehaviour, IEventHandler
 {
     #region Variables
 	[SerializeField]
-    private readonly RectTransform slingerSpriteTransform;
+    private RectTransform slingerSpriteTransform;
     private Touch touch;
     #endregion
 

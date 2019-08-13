@@ -6,9 +6,9 @@ public class OnDeathTrigger :MonoBehaviour
 {
 	#region Variables
 	[SerializeField]
-	private readonly GameObject eventSender;
+	private GameObject eventSender;
 	[SerializeField]
-	private readonly UnityEvent onDeathEvent;
+	private UnityEvent onDeathEvent;
 	#endregion
 
 	#region Initialization

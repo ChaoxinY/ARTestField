@@ -7,9 +7,9 @@ public class BulletTrajectoryUpdater : MonoBehaviour, IEventHandler
 { 
 	#region Variables
 	[SerializeField]
-	private readonly GameObject bulletOrigin;
+	private GameObject bulletOrigin;
 	[SerializeField]
-	private readonly GameObject trajectoryPrefab;
+	private GameObject trajectoryPrefab;
 	private BallisticTrajectoryInfo ballisticTrajectoryInfo;
 	private Touch touch;
 	private Quaternion originRotation;

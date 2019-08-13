@@ -6,23 +6,23 @@ public class DebugWidow : MonoBehaviour
 {
 	#region Variables
 	[SerializeField]
-	private readonly GameObject slingShotOriginPoint;
+	private GameObject slingShotOriginPoint;
 	[SerializeField]
-	private readonly InputField bulletMassInputField;
+	private InputField bulletMassInputField;
 	[SerializeField]
-	private readonly InputField slingShotLaunchForceInputField;
+	private InputField slingShotLaunchForceInputField;
 	[SerializeField]
-	private readonly InputField slingShotLaunchAngleInputField;
+	private InputField slingShotLaunchAngleInputField;
 	[SerializeField]
-	private readonly InputField slingShotAngleCounterWeightInputField;
+	private InputField slingShotAngleCounterWeightInputField;
 	[SerializeField]
-	private readonly InputField slingShotOriginXInputField;
+	private InputField slingShotOriginXInputField;
 	[SerializeField]
-	private readonly InputField slingShotOriginYInputField;
+	private InputField slingShotOriginYInputField;
 	[SerializeField]
-	private readonly InputField slingShotOriginZInputField;
+	private InputField slingShotOriginZInputField;
 	[SerializeField]
-	private readonly InputField trajectoryInterval;
+	private InputField trajectoryInterval;
 	#endregion
 
 	#region Functionality

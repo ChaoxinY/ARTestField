@@ -20,11 +20,11 @@ public class WaveSpawner : MonoBehaviour, IEventHandler
 {
 	#region Variables
 	[SerializeField]
-	private readonly List<Wave> waves;
+	private List<Wave> waves;
 	[SerializeField]
-	private readonly List<GameObject> availableMinionTypes;
+	private List<GameObject> availableMinionTypes;
 	[SerializeField]
-	private readonly Transform levelParent;
+	private Transform levelParent;
 	private PathMap pathMap;
 	private Queue<Wave> waveQueue = new Queue<Wave>();
 	private List<GameObject> spawnedMinions = new List<GameObject>();
@@ -43,7 +43,7 @@ public class WaveSpawner : MonoBehaviour, IEventHandler
 	private void Start()
 	{
 		pathMap = StaticReferences.currentPathMap;
-	}	
+	}
 	#endregion
 
 	#region Functionality
@@ -55,7 +55,7 @@ public class WaveSpawner : MonoBehaviour, IEventHandler
 			minionModule.MinionHit += SpawnMinion;
 		}
 		else if(publisherSubscribedEventArgs.Publisher.GetType()== typeof(LevelInitializer))
-		{ 		
+		{
 			LevelInitializer levelInitializer = (LevelInitializer)publisherSubscribedEventArgs.Publisher;
 			levelInitializer.LevelStarted += StartSpawning;
 			levelInitializer.LevelEnded += StopSpawning;
@@ -106,7 +106,6 @@ public class WaveSpawner : MonoBehaviour, IEventHandler
 	private void StartSpawning(object objects, EventArgs e)
 	{
 		currentSpawnLoop = SpawnLoop();
-		Debug.Log(this);
 		StartCoroutine(currentSpawnLoop);
 	}
 
@@ -114,7 +113,7 @@ public class WaveSpawner : MonoBehaviour, IEventHandler
 	{
 		while(waveQueue.Count > 0)
 		{
-			yield return  StartCoroutine(SpawnWave());
+			yield return StartCoroutine(SpawnWave());
 		}
 	}
 
@@ -124,7 +123,7 @@ public class WaveSpawner : MonoBehaviour, IEventHandler
 		currentWaveValue = currentWave.waveValue;
 		for(int i = 0; i < currentWave.startingMinions; i++)
 		{
-			InitializeMinion();			
+			InitializeMinion();
 		}
 
 		float spawnTimer = UnityEngine.Random.Range(currentWave.SpawnInterval.minValue, currentWave.SpawnInterval.maxValue);
@@ -146,22 +145,22 @@ public class WaveSpawner : MonoBehaviour, IEventHandler
 		int randomMinionTypeValue = StaticReferences.SystemToolMethods.GenerateRandomIEnumerablePosition(availableMinionTypes);
 		GameObject minion = availableMinionTypes[randomMinionTypeValue];
 		MinionPreset minionPreset = minion.GetComponent<Minion>().minionPreset;
-		
+
 		//If the minion value exceeds the wavevalue left. Force select a minion with the same value as the current wavevalue
 		int predictionValue = currentWaveValue;
 		if((predictionValue -= (int)minionPreset.rank) < 0)
 		{
 			minion = availableMinionTypes.Where(minionType => (int)minionType.GetComponent<Minion>().minionPreset.rank == currentWaveValue).ToList()[0];
 			minionPreset = minion.GetComponent<Minion>().minionPreset;
-		}		
+		}
 		//Debug.Log($"CurrentWave {currentWaveValue} MinionValue {(int)minionPreset.rank}");
 		currentWaveValue -= (int)minionPreset.rank;
 		int randomNodeSectionValue = StaticReferences.SystemToolMethods.GenerateRandomIEnumerablePosition(pathMap.INodeSections);
 		int randomPathNodeValue = StaticReferences.SystemToolMethods.GenerateRandomIEnumerablePosition(pathMap.INodeSections[randomNodeSectionValue].PathNodes);
 		Vector3 randomNodePosition = pathMap.INodeSections[randomNodeSectionValue].PathNodes[randomPathNodeValue].NodePosition;
-		
+
 		if(minion.GetComponent<Mover>())
-		{	
+		{
 			Mover mover = minion.GetComponent<Mover>();
 			mover.pathingInformation = new PathingInformation
 			{

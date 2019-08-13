@@ -5,7 +5,7 @@ public class SelfDestructor : MonoBehaviour
 {
 	#region Variables
 	[SerializeField]
-	private readonly float lifeTime;
+	private float lifeTime;
 	#endregion
 
 	#region Initialization

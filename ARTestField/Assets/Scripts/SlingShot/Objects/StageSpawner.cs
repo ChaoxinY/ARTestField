@@ -11,17 +11,15 @@ public class StageSpawner : MonoBehaviour, IEventHandler, IEventPublisher
 	public event EventHandler StageDeleted;
 
 	[SerializeField]
-	private readonly List<GameObject> availableStages;
+	private List<GameObject> availableStages;
 	[SerializeField]
-	private readonly Text debugText;
-	[SerializeField]
-	private readonly InputField stageInputfield;	
-	private bool stageSpawned; 
+	private InputField stageInputfield;
+	private bool stageSpawned;
 	private TrackableHit trackableHit;
 	private GameObject stage;
 	private GameObject stagePrefabToSpawn;
 	#endregion
-	
+
 	#region Initialization
 	private void Awake()
 	{
@@ -36,9 +34,9 @@ public class StageSpawner : MonoBehaviour, IEventHandler, IEventPublisher
 
 	#region Functionality
 	public void ClearStage()
-    {
-        Destroy(stage);
-        stageSpawned = false;
+	{
+		Destroy(stage);
+		stageSpawned = false;
 		StageDeleted?.Invoke(this, new EventArgs());
 	}
 
@@ -49,7 +47,7 @@ public class StageSpawner : MonoBehaviour, IEventHandler, IEventPublisher
 
 	public void SetCurrentStage()
 	{
-		stagePrefabToSpawn = availableStages[Mathf.Clamp(UtilityLibrary.GetIntValueFromInputField(stageInputfield),0,availableStages.Count-1)];
+		stagePrefabToSpawn = availableStages[Mathf.Clamp(UtilityLibrary.GetIntValueFromInputField(stageInputfield), 0, availableStages.Count-1)];
 		Debug.Log($"currentStage {stagePrefabToSpawn}");
 	}
 
@@ -81,22 +79,22 @@ public class StageSpawner : MonoBehaviour, IEventHandler, IEventPublisher
 	}
 
 	private void OnPlaneSelected(object eventPublisher, PlaneSelectedEventArgs planeSelectedEventArgs)
-    {
-        trackableHit = planeSelectedEventArgs.TrackableHit;
-        if (!stageSpawned)
-        {
-            SpawnStage();
-            stageSpawned = true;
-        }    
-    }
+	{
+		trackableHit = planeSelectedEventArgs.TrackableHit;
+		if(!stageSpawned)
+		{
+			SpawnStage();
+			stageSpawned = true;
+		}
+	}
 
-    private void SpawnStage()
-    {
-        stage = Instantiate(stagePrefabToSpawn, trackableHit.Pose.position + Vector3.up *0.8f, Quaternion.identity);
-        var anchor = trackableHit.Trackable.CreateAnchor(trackableHit.Pose);
-        //Prevent static gameobject to slip away.
-        stage.transform.parent = anchor.transform;
-    }
+	private void SpawnStage()
+	{
+		stage = Instantiate(stagePrefabToSpawn, trackableHit.Pose.position + Vector3.up *0.8f, Quaternion.identity);
+		var anchor = trackableHit.Trackable.CreateAnchor(trackableHit.Pose);
+		//Prevent static gameobject to slip away.
+		stage.transform.parent = anchor.transform;
+	}
 	#endregion
 }
 

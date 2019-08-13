@@ -5,7 +5,7 @@ using UnityEngine;
 public class PathNode : MonoBehaviour
 {
 	#region Variables
-	public List<PathNode> ConnectedNodes { get; set; }
+	public List<PathNode> ConnectedNodes { get; set; } = new List<PathNode>();
 	public Vector3 NodePosition { get; private set; }
 	#endregion
 

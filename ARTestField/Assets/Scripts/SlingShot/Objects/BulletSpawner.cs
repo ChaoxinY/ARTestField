@@ -7,7 +7,7 @@ public class BulletSpawner : MonoBehaviour, IEventHandler
 {
 	#region Variables
 	[SerializeField]
-    private readonly GameObject bulletPrefab;
+    private GameObject bulletPrefab;
     private Touch touch;
 	#endregion
 

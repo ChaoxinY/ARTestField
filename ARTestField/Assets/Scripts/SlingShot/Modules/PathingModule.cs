@@ -31,7 +31,7 @@ public static class PathingModuleFactory
 
 public class PathingModule : IFixedUpdater
 {
-	#region Variabless
+	#region Variables
 	public Func<PathfindingCalculationParameters, Task<List<Vector3>>> CalculatePath;
 	public INodeSection nodeSection;
 	public float movementSpeedMultiplier;
@@ -39,7 +39,7 @@ public class PathingModule : IFixedUpdater
 	private Queue<Vector3> currentPath = new Queue<Vector3>();
 	private Vector3 nextPosition = Vector3.zero;
 	private List<Vector3> debugPath = new List<Vector3>();
-	private bool activated, calculatingPath;
+	private bool calculatingPath;
 	#endregion
 
 	#region Initialization
